@@ -32,8 +32,11 @@
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-confetti-cannon": "^1.5.2",
+    "react-native-edge-to-edge": "^1.6.0",
+    "react-native-nitro-modules": "^0.25.2",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
+    "react-native-unistyles": "^3.0.0-rc.4",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-export const COLORS = {
+export const Colors = {
   primary: "#F36523",
   primaryHover: "#D74C0C",
   primaryDisabled: "#F8A37B",
@@ -15,7 +15,7 @@ export const COLORS = {
   Info: "#8EC63F",
 };
 
-export const SPACING = {
+export const Spacing = {
   xs: 4,
   sm: 8,
   md: 12,
@@ -27,7 +27,7 @@ export const SPACING = {
   max: 36,
 };
 
-export const FONT_SIZES = {
+export const FontSizes = {
   xs: 12,
   sm: 14,
   md: 16,
