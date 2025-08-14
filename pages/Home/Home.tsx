@@ -1,11 +1,12 @@
-import { Text, TextInput, View } from "react-native";
+import { Text, View } from "react-native";
+
+import Search from "./Search";
 
 const Home = () => {
   return (
     <View>
-      <View>
-        <Text style={{ backgroundColor: "pink" }}>Search and logo section</Text>
-      </View>
+      <Search />
+
       <View>
         <Text style={{ backgroundColor: "green" }}>Quick search options</Text>
       </View>

@@ -1,32 +1,60 @@
 import { Tabs } from "expo-router";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "assets/styles/theme";
 
 export default function Layout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "blue",
+        tabBarActiveTintColor: Colors.primaryHover,
         headerStyle: {
           backgroundColor: Colors.primary,
         },
+        headerTintColor: Colors.primaryLight,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Search",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <MaterialIcons name="search" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="dish"
+        name="dishSearch"
         options={{
-          title: "Dishes",
+          title: "Fast Food",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            <MaterialIcons name="fastfood" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="restaurantSearch"
+        options={{
+          title: "Restaurant",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="restaurant" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="reservations"
+        options={{
+          title: "Reservation",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="calendar-month" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="person" size={24} color={color} />
           ),
         }}
       />
