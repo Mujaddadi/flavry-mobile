@@ -14,6 +14,7 @@ export const Colors = {
   error: "#ED1B24",
   Warning: "#FFC217",
   Info: "#8EC63F",
+  borderColor: "#E0E0E0",
 };
 
 export const Spacing = {
