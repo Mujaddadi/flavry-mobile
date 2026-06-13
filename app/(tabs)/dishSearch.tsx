@@ -1,4 +1,4 @@
-import DishSearch from "pages/DishSearch";
+import DishSearch from "screens/DishSearch";
 
 export default function Index() {
   return <DishSearch />;
