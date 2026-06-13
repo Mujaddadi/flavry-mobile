@@ -6,11 +6,39 @@
         "hooks": [
           {
             "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read -r f; npx prettier --write \"$f\"; } 2>/dev/null || true",
+            "statusMessage": "Running Prettier..."
+          },
+          {
+            "type": "command",
             "command": "jq -r '.tool_input.file_path // empty' | { read -r f; [[ \"$f\" =~ \\.(ts|tsx|js|jsx)$ ]] && npx eslint \"$f\"; } 2>/dev/null || true",
             "statusMessage": "Running ESLint..."
           }
         ]
       }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm test)",
+      "Bash(npm run lint)",
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npm run format)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git log)",
+      "Bash(git add)",
+      "Bash(git commit)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -rf /)",
+      "Bash(git reset --hard)",
+      "Bash(git clean -fd)",
+      "Bash(git push --force)",
+      "Bash(npm publish)",
+      "Bash(sudo)"
     ]
   }
 }
