@@ -1,49 +1,115 @@
-import { View, Text, useWindowDimensions } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import MaterialIcons from "@react-native-vector-icons/material-icons";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from "react-native";
+import { usePathname } from "expo-router";
 
+import { useHomeStore } from "store/homeStore";
+import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { getHeaderName } from "./utilityFunctions";
 
 const CustomHeader = () => {
-  const route = useRoute();
+  const currentRoute = usePathname();
   const { width } = useWindowDimensions();
+  const { location, cartCount } = useHomeStore();
+  //This is to show the current screen name in the header
+  const isHome = currentRoute == "/";
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        width: width - 30, // Otherwise, the header moved away from the screen from the left
-      }}
-    >
-      <View
-        style={{ flex: 1, justifyContent: "center", backgroundColor: "blue" }}
+    <View style={[styles.container, { width: width - 30 }]}>
+      {/* Left: location (home) or screen title (other screens) */}
+      <TouchableOpacity
+        style={styles.locationRow}
+        accessibilityLabel={
+          isHome ? `Current location: ${location}` : undefined
+        }
+        accessibilityRole={isHome ? "button" : undefined}
       >
-        <Text> {getHeaderName(route.name)} </Text>
-      </View>
+        {isHome ? (
+          <>
+            <MaterialIcons
+              name="location-on"
+              size={18}
+              color={Colors.textLight}
+            />
+            <Text style={styles.locationText} numberOfLines={1}>
+              {location}
+            </Text>
+          </>
+        ) : (
+          <Text style={styles.screenTitle}>{getHeaderName(currentRoute)}</Text>
+        )}
+      </TouchableOpacity>
 
-      <View
-        style={{
-          flex: 2,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "red",
-        }}
+      {/* Right: cart icon with badge */}
+      <TouchableOpacity
+        style={styles.cartButton}
+        accessibilityLabel={`Cart, ${cartCount} item${cartCount === 1 ? "" : "s"}`}
+        accessibilityRole="button"
       >
-        <Text> Center </Text>
-      </View>
-
-      <View
-        style={{
-          flex: 1,
-          alignItems: "flex-end",
-          justifyContent: "center",
-          backgroundColor: "green",
-        }}
-      >
-        <Text> right text </Text>
-      </View>
+        <MaterialIcons
+          name="shopping-cart"
+          size={24}
+          color={Colors.textLight}
+        />
+        {cartCount > 0 && (
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{cartCount}</Text>
+          </View>
+        )}
+      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: Spacing.xs,
+  },
+  locationRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+    flex: 1,
+  },
+  locationText: {
+    color: Colors.textLight,
+    fontSize: FontSizes.md,
+    fontWeight: "600",
+    flexShrink: 1,
+  },
+  screenTitle: {
+    color: Colors.textLight,
+    fontSize: FontSizes.md,
+    fontWeight: "600",
+  },
+  cartButton: {
+    padding: Spacing.xs,
+  },
+  badge: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    backgroundColor: Colors.textLight,
+    borderRadius: 8,
+    minWidth: 16,
+    height: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 2,
+  },
+  badgeText: {
+    color: Colors.primary,
+    fontSize: FontSizes.xs - 2,
+    fontWeight: "700",
+  },
+});
 
 export default CustomHeader;
