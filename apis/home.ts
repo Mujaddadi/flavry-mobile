@@ -1,6 +1,6 @@
 import { Category, Dish, PromoBanner, Restaurant } from "types/home";
 
-// TODO: Mock data — swap these functions for real client calls when the backend is ready.
+// TODO: Mock data — swap these functions for real api calls when the backend is ready.
 
 export const fetchCategories = async (): Promise<Category[]> => [
   {
