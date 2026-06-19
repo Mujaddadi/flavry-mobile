@@ -148,55 +148,13 @@ Five tabs (icons from `@react-native-vector-icons/material-design-icons`):
 - Images use lazy loading with a placeholder colour
 - react-query cache avoids redundant network requests on re-focus
 
-## Security Requirements (OWASP Top 10)
+## Security Requirements
 
-| Risk                          | Mitigation                                                                                     |
-| ----------------------------- | ---------------------------------------------------------------------------------------------- |
-| A03 Injection                 | Search query sanitised (strip tags, trim, maxLength=100) before use as route param or API arg  |
-| A01 Broken Access Control     | Cart and favourites actions gated behind auth check; API calls include auth token              |
-| A02 Cryptographic Failures    | No sensitive user data (tokens, addresses) stored in AsyncStorage unencrypted; use SecureStore |
-| A05 Security Misconfiguration | API base URL from env var, never hardcoded                                                     |
-| A09 Logging Failures          | No PII logged to console in production builds                                                  |
+use security.md for security requirements
 
 ## Colour Design Tokens
 
-Use these values as unistyles theme tokens. Reference tokens by name in all components — never hardcode hex values.
-
-### Brand
-
-| Token               | Hex       | Usage                                                                         |
-| ------------------- | --------- | ----------------------------------------------------------------------------- |
-| `primary`           | `#f36523` | Buttons, header bar, active states, badges                                    |
-| `primaryBackground` | `#f36523` | Screen/card backgrounds (⚠ value cut off in spec image — confirm with design) |
-
-### Logo
-
-| Token        | Hex       | Notes      |
-| ------------ | --------- | ---------- |
-| `logoRed`    | `#ed1b24` | "F" letter |
-| `logoGreen`  | `#00a650` | "l" letter |
-| `logoLime`   | `#8ec63f` | "a" letter |
-| `logoYellow` | `#FFC217` | "v" letter |
-| `logoBrown`  | `#8c6239` | "r" letter |
-
-### Black & White
-
-| Token    | Hex       | Usage                   |
-| -------- | --------- | ----------------------- |
-| `black1` | `#000000` | Primary text            |
-| `black2` | `#1D1D1D` | Secondary headings      |
-| `black3` | `#282828` | Tertiary text           |
-| `white`  | `#FFFFFF` | Backgrounds, icon fills |
-
-### Grey
-
-| Token   | Hex       | Usage                          |
-| ------- | --------- | ------------------------------ |
-| `gray1` | `#333333` | Body text on light backgrounds |
-| `gray2` | `#4F4F4F` | Secondary body text            |
-| `gray3` | `#828282` | Placeholder text, captions     |
-| `gray4` | `#BDBDBD` | Dividers, borders              |
-| `gray5` | `#E0E0E0` | Skeleton/loading placeholders  |
+Use colors.md for color values
 
 ## Constraints
 
