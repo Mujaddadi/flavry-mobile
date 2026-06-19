@@ -1,8 +1,8 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 import {
+  Pressable,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   useWindowDimensions,
 } from "react-native";
@@ -22,7 +22,7 @@ const CustomHeader = () => {
   return (
     <View style={[styles.container, { width: width - 30 }]}>
       {/* Left: location (home) or screen title (other screens) */}
-      <TouchableOpacity
+      <Pressable
         style={styles.locationRow}
         accessibilityLabel={
           isHome ? `Current location: ${location}` : undefined
@@ -43,10 +43,10 @@ const CustomHeader = () => {
         ) : (
           <Text style={styles.screenTitle}>{getHeaderName(currentRoute)}</Text>
         )}
-      </TouchableOpacity>
+      </Pressable>
 
       {/* Right: cart icon with badge */}
-      <TouchableOpacity
+      <Pressable
         style={styles.cartButton}
         accessibilityLabel={`Cart, ${cartCount} item${cartCount === 1 ? "" : "s"}`}
         accessibilityRole="button"
@@ -61,7 +61,7 @@ const CustomHeader = () => {
             <Text style={styles.badgeText}>{cartCount}</Text>
           </View>
         )}
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };
