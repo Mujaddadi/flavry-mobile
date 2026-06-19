@@ -8,13 +8,15 @@
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.flavry"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.flavry"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -31,6 +33,13 @@
           "backgroundColor": "#ffffff"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "1e89dba2-92ed-4b7f-ba38-874b477d7f30"
+      }
+    },
+    "owner": "flavry"
   }
 }
