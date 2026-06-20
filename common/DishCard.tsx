@@ -1,6 +1,5 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
-import { Image, Pressable, Text, View, Dimensions } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import { Image, Pressable, Text, View, Dimensions, StyleSheet } from "react-native";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { useHomeStore } from "store/homeStore";
@@ -15,6 +14,8 @@ interface DishCardProps {
 const CARD_WIDTH = wp(72);
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const IMAGE_HEIGHT = Math.round((CARD_WIDTH / SCREEN_WIDTH) * 140);
+const ICON_SMALL = wp(3);
+const ICON_MED = wp(4.5);
 
 const DishCard = ({ item, onPress }: DishCardProps) => {
   const { incrementCart } = useHomeStore();
@@ -32,7 +33,11 @@ const DishCard = ({ item, onPress }: DishCardProps) => {
       <View style={styles.card}>
         {item.discount && (
           <View style={styles.badge}>
-            <MaterialIcons name="local-offer" size={10} color={Colors.white} />
+            <MaterialIcons
+              name="local-offer"
+              size={ICON_SMALL}
+              color={Colors.white}
+            />
             <Text style={styles.badgeText}>{item.discount}</Text>
           </View>
         )}
@@ -63,7 +68,7 @@ const DishCard = ({ item, onPress }: DishCardProps) => {
             <View style={styles.deliveryRow}>
               <MaterialIcons
                 name="delivery-dining"
-                size={16}
+                size={ICON_MED}
                 color={Colors.gray3}
               />
               <Text style={styles.deliveryTime}>{item.deliveryTime}</Text>

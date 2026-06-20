@@ -87,7 +87,9 @@ const PromoCarousel = ({banners, loading}: PromoCarouselProps) => {
         );
     }
 
-    if (!banners?.length) return null;
+    if (!banners?.length) {
+      return null;
+    }
 
     return (
         <View style={styles.container}>
