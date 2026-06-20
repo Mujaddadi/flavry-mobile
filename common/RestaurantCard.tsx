@@ -1,5 +1,6 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, Text, View, Dimensions } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { Restaurant } from "types/home";
@@ -11,6 +12,8 @@ interface RestaurantCardProps {
 }
 
 const CARD_WIDTH = wp(75);
+const SCREEN_WIDTH = Dimensions.get("window").width;
+const IMAGE_HEIGHT = Math.round((CARD_WIDTH / SCREEN_WIDTH) * 140);
 
 const RestaurantCard = ({ item, onPress }: RestaurantCardProps) => (
   <Pressable
@@ -83,7 +86,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 140,
+    height: IMAGE_HEIGHT,
     resizeMode: "cover",
   },
   badge: {
