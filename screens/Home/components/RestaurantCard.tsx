@@ -14,41 +14,46 @@ const CARD_WIDTH = wp(75);
 
 const RestaurantCard = ({ item, onPress }: RestaurantCardProps) => (
   <Pressable
-    style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}
+    style={({ pressed }) => [
+      styles.shadowContainer,
+      pressed && { opacity: 0.85 },
+    ]}
     onPress={() => onPress(item)}
     accessibilityRole="button"
     accessibilityLabel={`${item.name}, ${item.tagline}, delivery ${item.deliveryTime}`}
   >
-    <View style={styles.imageContainer}>
-      <Image
-        source={{ uri: item.image }}
-        style={styles.image}
-        accessibilityLabel={item.name}
-      />
-      {item.deliveryDiscount && (
-        <View style={styles.badge}>
-          <MaterialIcons name="local-offer" size={10} color={Colors.white} />
-          <Text style={styles.badgeText}>{item.deliveryDiscount}</Text>
-        </View>
-      )}
-    </View>
-    <View style={styles.body}>
-      <View style={styles.infoRow}>
-        <View style={styles.textBlock}>
-          <Text style={styles.name} numberOfLines={1}>
-            {item.name}
-          </Text>
-          <Text style={styles.tagline} numberOfLines={1}>
-            {item.tagline}
-          </Text>
-        </View>
-        <View style={styles.deliveryRow}>
-          <MaterialIcons
-            name="delivery-dining"
-            size={16}
-            color={Colors.gray3}
-          />
-          <Text style={styles.deliveryTime}>{item.deliveryTime}</Text>
+    <View style={styles.card}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={{ uri: item.image }}
+          style={styles.image}
+          accessibilityLabel={item.name}
+        />
+        {item.deliveryDiscount && (
+          <View style={styles.badge}>
+            <MaterialIcons name="local-offer" size={10} color={Colors.white} />
+            <Text style={styles.badgeText}>{item.deliveryDiscount}</Text>
+          </View>
+        )}
+      </View>
+      <View style={styles.body}>
+        <View style={styles.infoRow}>
+          <View style={styles.textBlock}>
+            <Text style={styles.name} numberOfLines={1}>
+              {item.name}
+            </Text>
+            <Text style={styles.tagline} numberOfLines={1}>
+              {item.tagline}
+            </Text>
+          </View>
+          <View style={styles.deliveryRow}>
+            <MaterialIcons
+              name="delivery-dining"
+              size={16}
+              color={Colors.gray3}
+            />
+            <Text style={styles.deliveryTime}>{item.deliveryTime}</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -56,17 +61,22 @@ const RestaurantCard = ({ item, onPress }: RestaurantCardProps) => (
 );
 
 const styles = StyleSheet.create({
-  card: {
+  shadowContainer: {
     width: CARD_WIDTH,
+    marginRight: Spacing.md,
+    marginBottom: Spacing.md,
+    backgroundColor: Colors.white,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  card: {
     backgroundColor: Colors.white,
     borderRadius: 12,
     overflow: "hidden",
-    marginRight: Spacing.md,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 3,
   },
   imageContainer: {
     position: "relative",
