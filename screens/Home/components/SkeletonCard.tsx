@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { Colors } from "assets/styles/theme";
+import { Colors, Spacing } from "assets/styles/theme";
 import { wp } from "utils/dimensions";
 
 interface SkeletonCardProps {
@@ -25,7 +25,11 @@ const SkeletonCard = ({ width = wp(75), height = 220 }: SkeletonCardProps) => {
   const animStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
 
   return (
-    <Animated.View style={[styles.card, { width, height }, animStyle]}>
+    <Animated.View
+      style={[styles.card, { width, height }, animStyle]}
+      accessibilityElementsHidden
+      importantForAccessibility="no-hide-descendants"
+    >
       <View style={styles.imagePlaceholder} />
       <View style={styles.body}>
         <View style={styles.titleLine} />
@@ -40,11 +44,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: Colors.borderColor,
     overflow: "hidden",
-    marginRight: 12,
+    marginRight: Spacing.md,
   },
   imagePlaceholder: {
     flex: 1,
-    backgroundColor: "#D0D0D0",
+    backgroundColor: Colors.gray5,
   },
   body: {
     padding: 10,
@@ -53,13 +57,13 @@ const styles = StyleSheet.create({
   titleLine: {
     height: 12,
     borderRadius: 6,
-    backgroundColor: "#C8C8C8",
+    backgroundColor: Colors.gray4,
     width: "70%",
   },
   subtitleLine: {
     height: 10,
     borderRadius: 5,
-    backgroundColor: "#D8D8D8",
+    backgroundColor: Colors.gray5,
     width: "50%",
   },
 });
