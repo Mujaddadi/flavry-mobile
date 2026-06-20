@@ -8,63 +8,54 @@ import { wp } from "utils/dimensions";
 
 import { SectionType } from "types/common";
 
-import DishCard from "./DishCard";
-import RestaurantCard from "./RestaurantCard";
+// Removed unused DishCard and RestaurantCard imports
 import SkeletonCard from "./SkeletonCard";
 
 
-interface Props <T extends Dish | Restaurant>  {
+interface Props<T extends Dish | Restaurant> {
   title: string;
   type: SectionType;
   data?: T[];
   loading: boolean;
-  onPress: (item: T) => void;
+  renderCard: (item: T) => React.ReactElement;
 }
 
 const DISH_CARD_WIDTH = wp(72);
 const RESTAURANT_CARD_WIDTH = wp(75);
 
 const SectionCarousel = <T extends Dish | Restaurant>({
-  title,
-  type,
-  data,
-  loading,
-  onPress,
-}: Props<T>) => {
+                                                        title,
+                                                        type,
+                                                        data,
+                                                        loading,
+                                                        renderCard,
+                                                      }: Props<T>) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onViewableItemsChanged = useCallback(
-    ({ viewableItems }: { viewableItems: { index: number | null }[] }) => {
-      if (viewableItems[0]?.index != null)
-        setActiveIndex(viewableItems[0].index);
-    },
-    [],
+      ({ viewableItems }: { viewableItems: { index: number | null }[] }) => {
+        if (viewableItems[0]?.index != null)
+          setActiveIndex(viewableItems[0].index);
+      },
+      [],
   );
 
   const cardWidth = type === "dish" ? DISH_CARD_WIDTH : RESTAURANT_CARD_WIDTH;
 
   const renderItem = useCallback(
-    ({ item }: { item: T }) =>
-      type === SectionType.DISH ? (
-          <DishCard item={item as Dish} onPress={onPress as (item: Dish) => void} />
-      ) : (
-        <RestaurantCard
-          item={item as Restaurant}
-          onPress={onPress as (item: Restaurant) => void}
-        />
-      ),
-    [type, onPress],
+      ({ item }: { item: T }) => renderCard(item),
+      [renderCard],
   );
 
   if (loading) {
     return (
-      <View style={styles.section}>
-        <Text style={styles.heading}>{title}</Text>
-        <View style={styles.skeletonRow}>
-          <SkeletonCard width={cardWidth} height={220} />
-          <SkeletonCard width={cardWidth} height={220} />
+        <View style={styles.section}>
+          <Text style={styles.heading}>{title}</Text>
+          <View style={styles.skeletonRow}>
+            <SkeletonCard width={cardWidth} height={220} />
+            <SkeletonCard width={cardWidth} height={220} />
+          </View>
         </View>
-      </View>
     );
   }
 
@@ -73,27 +64,27 @@ const SectionCarousel = <T extends Dish | Restaurant>({
   }
 
   return (
-    <View style={styles.section}>
-      <Text style={styles.heading}>{title}</Text>
-      <FlashList<T>
-        data={data}
-        horizontal
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.list}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
-      />
-      <View style={styles.dots}>
-        {data?.map((item, i) => (
-          <View
-            key={item?.id}
-            style={[styles.dot, i === activeIndex && styles.dotActive]}
-          />
-        ))}
+      <View style={styles.section}>
+        <Text style={styles.heading}>{title}</Text>
+        <FlashList<T>
+            data={data}
+            horizontal
+            keyExtractor={(item) => item.id}
+            renderItem={renderItem}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.list}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
+        />
+        <View style={styles.dots}>
+          {data?.map((item, i) => (
+              <View
+                  key={item?.id}
+                  style={[styles.dot, i === activeIndex && styles.dotActive]}
+              />
+          ))}
+        </View>
       </View>
-    </View>
   );
 };
 
