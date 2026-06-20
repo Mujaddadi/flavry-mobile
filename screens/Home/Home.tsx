@@ -83,7 +83,7 @@ const Home = () => {
       />
 
       <SectionCarousel<Restaurant>
-        title="Favourite Restaurant"
+        title="Favourite Restaurants"
         type={SectionType.RESTAURANT}
         data={favouriteRestaurants}
         loading={favRestLoading}
@@ -93,7 +93,7 @@ const Home = () => {
       />
 
       <SectionCarousel<Restaurant>
-        title="Popular Restaurant"
+        title="Popular Restaurants"
         type={SectionType.RESTAURANT}
         data={popularRestaurants}
         loading={popRestLoading}
