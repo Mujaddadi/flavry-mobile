@@ -17,7 +17,7 @@ interface SectionCarouselProps {
   type: SectionType;
   data?: Dish[] | Restaurant[];
   loading: boolean;
-  onRestaurantPress?: (restaurant: Restaurant) => void;
+  onRestaurantPress: (restaurant: Restaurant) => void;
 }
 
 const DISH_CARD_WIDTH = wp(72);
@@ -42,6 +42,19 @@ const SectionCarousel = ({
 
   const cardWidth = type === "dish" ? DISH_CARD_WIDTH : RESTAURANT_CARD_WIDTH;
 
+  const renderItem = useCallback(
+    ({ item }: { item: Dish | Restaurant }) =>
+      type === "dish" ? (
+        <DishCard item={item as Dish} />
+      ) : (
+        <RestaurantCard
+          item={item as Restaurant}
+          onPress={onRestaurantPress}
+        />
+      ),
+    [type, onRestaurantPress],
+  );
+
   if (loading) {
     return (
       <View style={styles.section}>
@@ -63,16 +76,7 @@ const SectionCarousel = ({
         data={data as (Dish | Restaurant)[]}
         horizontal
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) =>
-          type === "dish" ? (
-            <DishCard item={item as Dish} />
-          ) : (
-            <RestaurantCard
-              item={item as Restaurant}
-              onPress={onRestaurantPress ?? (() => {})}
-            />
-          )
-        }
+        renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.list}
         onViewableItemsChanged={onViewableItemsChanged}

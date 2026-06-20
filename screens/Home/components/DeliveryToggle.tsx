@@ -10,11 +10,12 @@ import Animated, {
 import { Colors } from "assets/styles/theme";
 import { useHomeStore } from "store/homeStore";
 import { DeliveryMode } from "types/home";
+import { wp } from "utils/dimensions";
 
-const TRACK_WIDTH = 56;
-const TRACK_HEIGHT = 28;
-const THUMB_SIZE = 22;
-const THUMB_PADDING = 3;
+const TRACK_WIDTH = wp(15);
+const TRACK_HEIGHT = wp(7.5);
+const THUMB_SIZE = wp(5.9);
+const THUMB_PADDING = wp(0.8);
 const THUMB_TRAVEL = TRACK_WIDTH - THUMB_SIZE - THUMB_PADDING * 2;
 
 const DeliveryToggle = () => {
@@ -38,6 +39,7 @@ const DeliveryToggle = () => {
   return (
     <Pressable
       onPress={toggle}
+      hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
       accessibilityRole="switch"
       accessibilityLabel={
         isDelivery ? "Switch to pickup" : "Switch to delivery"

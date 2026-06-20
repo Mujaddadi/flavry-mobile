@@ -54,7 +54,10 @@ const PromoCarousel = ({ banners, loading }: PromoCarouselProps) => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => {
         const next = (prev + 1) % banners.length;
-        listRef.current?.scrollToIndex({ index: next, animated: true });
+
+        listRef.current
+          ?.scrollToIndex({ index: next, animated: true })
+          ?.catch(() => {});
         return next;
       });
     }, 4000);
@@ -67,6 +70,11 @@ const PromoCarousel = ({ banners, loading }: PromoCarouselProps) => {
         setActiveIndex(viewableItems[0].index);
       }
     },
+    [],
+  );
+
+  const renderItem = useCallback(
+    ({ item }: { item: PromoBanner }) => <BannerItem item={item} />,
     [],
   );
 
@@ -88,7 +96,7 @@ const PromoCarousel = ({ banners, loading }: PromoCarouselProps) => {
         horizontal
         pagingEnabled
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <BannerItem item={item} />}
+        renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
@@ -97,7 +105,7 @@ const PromoCarousel = ({ banners, loading }: PromoCarouselProps) => {
       <View style={styles.dots}>
         {banners.map((_, i) => (
           <View
-            key={i}
+            key={i} //TODO: Remove that index reference here
             style={[styles.dot, i === activeIndex && styles.dotActive]}
           />
         ))}

@@ -1,5 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
-import { Image, StyleSheet, Text, Pressable, View } from "react-native";
+import { useCallback } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { Category } from "types/home";
@@ -40,6 +41,13 @@ const CategoryStrip = ({
   loading,
   onSelect,
 }: CategoryStripProps) => {
+  const renderItem = useCallback(
+    ({ item }: { item: Category }) => (
+      <CategoryItem item={item} onSelect={onSelect} />
+    ),
+    [onSelect],
+  );
+
   if (loading) {
     return (
       <View style={styles.skeletonRow}>
@@ -57,9 +65,7 @@ const CategoryStrip = ({
       data={categories}
       horizontal
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <CategoryItem item={item} onSelect={onSelect} />
-      )}
+      renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.list}
     />

@@ -64,7 +64,7 @@ const Search = ({ onSearch }: SearchProps) => {
       />
 
       <Pressable
-        style={[styles.searchButton, !isValid && styles.searchButton]}
+        style={styles.searchButton}
         onPress={handleSubmit(submit)}
         disabled={!isValid}
         accessibilityRole="button"
@@ -113,9 +113,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-  },
-  searchButtonDisabled: {
-    backgroundColor: Colors.primaryDisabled,
   },
   searchButtonText: {
     color: Colors.white,
