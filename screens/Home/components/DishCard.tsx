@@ -18,7 +18,7 @@ const DishCard = ({item, onPress}: DishCardProps) => {
 
     return (
         <Pressable
-            style={({pressed}) => [styles.card, pressed && {opacity: 0.85}]}
+            style={({pressed}) => [styles.shadowContainer, pressed && {opacity: 0.85}]}
             onPress={() => onPress(item)}
             accessibilityRole="button"
             accessibilityLabel={`${item.name}, delivery ${item.deliveryTime}`}
@@ -70,17 +70,21 @@ const DishCard = ({item, onPress}: DishCardProps) => {
 };
 
 const styles = StyleSheet.create({
-    card: {
+    shadowContainer: {
         width: CARD_WIDTH,
+        marginRight: Spacing.md,
+        marginBottom: Spacing.md,
+        borderRadius: 12,
+        shadowColor: Colors.black1,
+        shadowOffset: {width: 0, height: 4},
+        shadowOpacity: 0.8,
+        shadowRadius: 8,
+        elevation: 2,
+    },
+    card: {
         backgroundColor: Colors.white,
         borderRadius: 12,
         overflow: "hidden",
-        marginRight: Spacing.md,
-        shadowColor: Colors.black1,
-        shadowOffset: {width: 0, height: 2},
-        shadowOpacity: 0.08,
-        shadowRadius: 6,
-        elevation: 3,
     },
     badge: {
         position: "absolute",
