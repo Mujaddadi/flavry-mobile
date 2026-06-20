@@ -7,12 +7,13 @@ import { useFavouriteRestaurants } from "hooks/useFavouriteRestaurants";
 import { useCategories } from "hooks/useCategories";
 import { usePopularRestaurants } from "hooks/usePopularRestaurants";
 import { usePromoBanners } from "hooks/usePromoBanners";
-import { Restaurant } from "types/home";
+import { Dish, Restaurant } from "types/home";
 
 import CategoryStrip from "./components/CategoryStrip";
 import PromoCarousel from "./components/PromoCarousel";
 import SectionCarousel from "./components/SectionCarousel";
 import Search from "./Search";
+import { SectionType } from "types/common";
 
 const Home = () => {
   const router = useRouter();
@@ -37,7 +38,14 @@ const Home = () => {
     });
   };
 
-  const handleRestaurantPress = (restaurant: Restaurant) => {
+  const handleDishSelect = (dish: Dish) => {
+    router.push({
+      pathname: "/(tabs)/dishSearch",
+      params: { dish: dish.name },
+    });
+  };
+
+  const handleRestaurantSelect = (restaurant: Restaurant) => {
     router.push({
       pathname: "/(tabs)/restaurantSearch",
       params: { id: restaurant.id },
@@ -64,25 +72,26 @@ const Home = () => {
 
       <SectionCarousel
         title="Favourite Dishes"
-        type="dish"
+        type={SectionType.DISH}
         data={favouriteDishes}
         loading={dishesLoading}
+        onPress={handleDishSelect}
       />
 
       <SectionCarousel
         title="Favourite Restaurant"
-        type="restaurant"
+        type={SectionType.RESTAURANT}
         data={favouriteRestaurants}
         loading={favRestLoading}
-        onRestaurantPress={handleRestaurantPress}
+        onPress={handleRestaurantSelect}
       />
 
       <SectionCarousel
         title="Popular Restaurant"
-        type="restaurant"
+        type={SectionType.RESTAURANT}
         data={popularRestaurants}
         loading={popRestLoading}
-        onRestaurantPress={handleRestaurantPress}
+        onPress={handleRestaurantSelect}
       />
     </ScrollView>
   );

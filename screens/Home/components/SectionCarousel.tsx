@@ -6,30 +6,31 @@ import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { Dish, Restaurant } from "types/home";
 import { wp } from "utils/dimensions";
 
+import { SectionType } from "types/common";
+
 import DishCard from "./DishCard";
 import RestaurantCard from "./RestaurantCard";
 import SkeletonCard from "./SkeletonCard";
 
-type SectionType = "dish" | "restaurant";
 
-interface SectionCarouselProps {
+interface Props <T extends Dish | Restaurant>  {
   title: string;
   type: SectionType;
-  data?: Dish[] | Restaurant[];
+  data?: T[];
   loading: boolean;
-  onRestaurantPress: (restaurant: Restaurant) => void;
+  onPress: (item: T) => void;
 }
 
 const DISH_CARD_WIDTH = wp(72);
 const RESTAURANT_CARD_WIDTH = wp(75);
 
-const SectionCarousel = ({
+const SectionCarousel = <T extends Dish | Restaurant>({
   title,
   type,
   data,
   loading,
-  onRestaurantPress,
-}: SectionCarouselProps) => {
+  onPress,
+}: Props<T>) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onViewableItemsChanged = useCallback(
@@ -43,16 +44,16 @@ const SectionCarousel = ({
   const cardWidth = type === "dish" ? DISH_CARD_WIDTH : RESTAURANT_CARD_WIDTH;
 
   const renderItem = useCallback(
-    ({ item }: { item: Dish | Restaurant }) =>
-      type === "dish" ? (
-        <DishCard item={item as Dish} />
+    ({ item }: { item: T }) =>
+      type === SectionType.DISH ? (
+          <DishCard item={item as Dish} onPress={onPress as (item: Dish) => void} />
       ) : (
         <RestaurantCard
           item={item as Restaurant}
-          onPress={onRestaurantPress}
+          onPress={onPress as (item: Restaurant) => void}
         />
       ),
-    [type, onRestaurantPress],
+    [type, onPress],
   );
 
   if (loading) {
@@ -67,13 +68,15 @@ const SectionCarousel = ({
     );
   }
 
-  if (!data?.length) return null;
+  if (!data?.length) {
+    return null;
+  }
 
   return (
     <View style={styles.section}>
       <Text style={styles.heading}>{title}</Text>
-      <FlashList
-        data={data as (Dish | Restaurant)[]}
+      <FlashList<T>
+        data={data}
         horizontal
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
@@ -83,9 +86,9 @@ const SectionCarousel = ({
         viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
       />
       <View style={styles.dots}>
-        {data.map((item, i) => (
+        {data?.map((item, i) => (
           <View
-            key={item.id}
+            key={item?.id}
             style={[styles.dot, i === activeIndex && styles.dotActive]}
           />
         ))}
