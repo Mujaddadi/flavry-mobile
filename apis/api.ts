@@ -8,7 +8,6 @@ const api = axios.create({
   timeout: 10000,
 });
 
-// Attach an auth token when available. Prefer SecureStore, fall back to AsyncStorage if needed.
 api.interceptors.request.use(async (config) => {
   try {
     let  token = await SecureStore.getItemAsync("accessToken");
