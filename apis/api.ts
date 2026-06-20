@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as SecureStore from 'expo-secure-store';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? "https://api.flavry.com";
 
@@ -7,8 +8,16 @@ const api = axios.create({
   timeout: 10000,
 });
 
-// Attach auth token when available
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(async (config) => {
+  try {
+    let  token = await SecureStore.getItemAsync("accessToken");
+
+    if (token && config.headers) {
+      (config.headers as Record<string, string>)["Authorization"] = `Bearer ${token}`;
+    }
+  } catch (e) {
+    console.log(e)
+  }
   return config;
 });
 

@@ -7,12 +7,15 @@ import { useFavouriteRestaurants } from "hooks/useFavouriteRestaurants";
 import { useCategories } from "hooks/useCategories";
 import { usePopularRestaurants } from "hooks/usePopularRestaurants";
 import { usePromoBanners } from "hooks/usePromoBanners";
-import { Restaurant } from "types/home";
+import { Dish, Restaurant } from "types/home";
 
 import CategoryStrip from "./components/CategoryStrip";
 import PromoCarousel from "./components/PromoCarousel";
 import SectionCarousel from "./components/SectionCarousel";
+import DishCard from "common/DishCard";
+import RestaurantCard from "common/RestaurantCard";
 import Search from "./Search";
+import { SectionType } from "types/common";
 
 const Home = () => {
   const router = useRouter();
@@ -37,7 +40,14 @@ const Home = () => {
     });
   };
 
-  const handleRestaurantPress = (restaurant: Restaurant) => {
+  const handleDishSelect = (dish: Dish) => {
+    router.push({
+      pathname: "/(tabs)/dishSearch",
+      params: { dish: dish.name },
+    });
+  };
+
+  const handleRestaurantSelect = (restaurant: Restaurant) => {
     router.push({
       pathname: "/(tabs)/restaurantSearch",
       params: { id: restaurant.id },
@@ -62,27 +72,34 @@ const Home = () => {
 
       <PromoCarousel banners={banners} loading={bannersLoading} />
 
-      <SectionCarousel
+      <SectionCarousel<Dish>
         title="Favourite Dishes"
-        type="dish"
+        type={SectionType.DISH}
         data={favouriteDishes}
         loading={dishesLoading}
+        renderCard={(dish) => (
+          <DishCard item={dish} onPress={handleDishSelect} />
+        )}
       />
 
-      <SectionCarousel
-        title="Favourite Restaurant"
-        type="restaurant"
+      <SectionCarousel<Restaurant>
+        title="Favourite Restaurants"
+        type={SectionType.RESTAURANT}
         data={favouriteRestaurants}
         loading={favRestLoading}
-        onRestaurantPress={handleRestaurantPress}
+        renderCard={(restaurant) => (
+          <RestaurantCard item={restaurant} onPress={handleRestaurantSelect} />
+        )}
       />
 
-      <SectionCarousel
-        title="Popular Restaurant"
-        type="restaurant"
+      <SectionCarousel<Restaurant>
+        title="Popular Restaurants"
+        type={SectionType.RESTAURANT}
         data={popularRestaurants}
         loading={popRestLoading}
-        onRestaurantPress={handleRestaurantPress}
+        renderCard={(restaurant) => (
+          <RestaurantCard item={restaurant} onPress={handleRestaurantSelect} />
+        )}
       />
     </ScrollView>
   );
