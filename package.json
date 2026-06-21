@@ -11,6 +11,23 @@
     "test": "jest",
     "test-watch": "jest --watchAll"
   },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx,js,jsx}",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/babel.config.js",
+      "!**/expo-env.d.ts",
+      "!**/.expo/**",
+      "!**/*.test.{ts,tsx,js,jsx}",
+      "!**/*.spec.{ts,tsx,js,jsx}",
+      "!**/__tests__/**",
+      "!eslint.config.ts",
+      "!jest.config.{ts,js}",
+      "!*.config.{ts,js}"
+    ]
+  },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.4.3",
     "@hookform/resolvers": "^5.4.0",
@@ -18,7 +35,7 @@
     "@react-native-vector-icons/material-design-icons": "^13.1.2",
     "@react-native-vector-icons/material-icons": "^13.1.2",
     "@react-navigation/native": "^7.3.1",
-    "@shopify/flash-list": "2.0.2",
+    "@shopify/flash-list": "^2.3.2",
     "@shopify/react-native-skia": "2.6.2",
     "@tanstack/react-query": "^5.101.0",
     "axios": "1.15.2",

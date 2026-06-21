@@ -14,7 +14,7 @@ import PromoCarousel from "./components/PromoCarousel";
 import SectionCarousel from "./components/SectionCarousel";
 import DishCard from "common/DishCard";
 import RestaurantCard from "common/RestaurantCard";
-import Search from "./Search";
+import Search from "./components/Search";
 import { SectionType } from "types/common";
 
 const Home = () => {
