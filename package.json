@@ -19,7 +19,13 @@
       "!**/node_modules/**",
       "!**/babel.config.js",
       "!**/expo-env.d.ts",
-      "!**/.expo/**"
+      "!**/.expo/**",
+      "!**/*.test.{ts,tsx,js,jsx}",
+      "!**/*.spec.{ts,tsx,js,jsx}",
+      "!**/__tests__/**",
+      "!eslint.config.ts",
+      "!jest.config.{ts,js}",
+      "!*.config.{ts,js}"
     ]
   },
   "dependencies": {
