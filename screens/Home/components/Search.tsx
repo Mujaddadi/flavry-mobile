@@ -7,7 +7,7 @@ import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import Logo from "common/Images/Logo";
 import { wp } from "utils/dimensions";
 
-import DeliveryToggle from "./components/DeliveryToggle";
+import DeliveryToggle from "./DeliveryToggle";
 
 const searchSchema = z.object({
   query: z
