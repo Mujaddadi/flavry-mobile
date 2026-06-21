@@ -21,7 +21,7 @@ interface RestaurantCardProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const CARD_WIDTH = wp(75);
+const CARD_WIDTH = wp(72);
 const IMAGE_HEIGHT = wp(30);
 const ICON_SMALL = wp(3);
 const ICON_MED = wp(4.5);
