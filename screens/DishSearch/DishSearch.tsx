@@ -2,7 +2,6 @@ import { FlashList } from "@shopify/flash-list";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import DishCard from "common/DishCard";
@@ -22,7 +21,6 @@ const DishSearch = () => {
     category?: string;
   }>();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
 
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [favouriteIds, setFavouriteIds] = useState<Set<string>>(new Set());
@@ -89,7 +87,7 @@ const DishSearch = () => {
   );
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={styles.container}>
       <AppHeader
         title="Dishes"
         placeholder="Search for dishes"
