@@ -48,16 +48,23 @@ const DishCard = ({
       accessibilityLabel={`${item.name}, delivery ${item.deliveryTime}`}
     >
       <View style={styles.card}>
-        {item.discount && (
-          <View style={styles.badge}>
-            <MaterialIcons
-              name="local-offer"
-              size={ICON_SMALL}
-              color={Colors.white}
-            />
-            <Text style={styles.badgeText}>{item.discount}</Text>
-          </View>
-        )}
+        {item.discount &&
+          (item.discount === "Deal" ? (
+            <View style={styles.ribbonWrap}>
+              <View style={styles.ribbon}>
+                <Text style={styles.ribbonText}>{item.discount}</Text>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.badge}>
+              <MaterialIcons
+                name="local-offer"
+                size={ICON_SMALL}
+                color={Colors.white}
+              />
+              <Text style={styles.badgeText}>{item.discount}</Text>
+            </View>
+          ))}
         <Image
           source={{ uri: item.image }}
           style={styles.image}
@@ -145,6 +152,30 @@ const styles = StyleSheet.create({
   badgeText: {
     color: Colors.white,
     fontSize: FontSizes.xs - 1,
+    fontWeight: "700",
+  },
+  ribbonWrap: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 72,
+    height: 72,
+    overflow: "hidden",
+    zIndex: 1,
+  },
+  ribbon: {
+    position: "absolute",
+    top: 16,
+    left: -22,
+    width: 88,
+    backgroundColor: Colors.primary,
+    alignItems: "center",
+    paddingVertical: 5,
+    transform: [{ rotate: "-45deg" }],
+  },
+  ribbonText: {
+    color: Colors.white,
+    fontSize: FontSizes.xs,
     fontWeight: "700",
   },
   image: {
