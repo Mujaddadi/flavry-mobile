@@ -45,8 +45,16 @@ Display a scrollable list of dish results matching a user's search query or sele
 ### 4. Dish Result List
 
 - Vertically scrollable list of dish cards rendered using `FlashList` for performance
-- We have a DishCard component in common folder, use that
-
+- Use the existing `DishCard` component from `common/DishCard.tsx`
+- `DishCard` needs two new optional props:
+  - `isFavourited?: boolean` — drives the heart icon state (outlined = false, filled = true)
+  - `onFavouritePress?: (dish: Dish) => void` — renders a heart icon in the top-right corner of the card image; tapping calls this handler
+  - `accessibilityRole="button"` on the heart; label toggles between `"Add to favourites"` and `"Remove from favourites"`
+- Tapping the card body (outside the heart and add-to-cart buttons) navigates to the dish detail screen (Out of Scope)
+- **Loading state:** 3–4 `SkeletonCard` placeholders while the first page fetches
+- **Empty state:** Centred message `"No results found for '{query}'"` with a suggestion to try a different search term
+- **Infinite scroll:** `onEndReached` triggers the next page; `onEndReachedThreshold={0.3}`; a loading spinner renders in the list footer while subsequent pages fetch
+- `useDishSearch` hook does not exist yet — must be created in `hooks/`
 
 ### 5. Bottom Navigation Bar
 
@@ -112,6 +120,7 @@ Use theme.ts for color values
 - The page navigation is already there, so don't add any
 - The Bottom Tab Bar is already there, so don't add any
 - Add tests for search result screen
+
 ---
 
 ## Out of Scope
