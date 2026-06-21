@@ -1,4 +1,5 @@
 import { useRouter } from "expo-router";
+import { useCallback, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { Colors, Spacing } from "assets/styles/theme";
@@ -18,6 +19,16 @@ import Search from "./components/Search";
 import { SectionType } from "types/common";
 
 const Home = () => {
+  const [favouriteIds, setFavouriteIds] = useState<Set<string>>(new Set());
+
+  const toggleFavourite = useCallback((dish: Dish) => {
+    // TODO: Replace with API call + optimistic update when backend is ready
+    setFavouriteIds((prev) => {
+      const next = new Set(prev);
+      next.has(dish.id) ? next.delete(dish.id) : next.add(dish.id);
+      return next;
+    });
+  }, []);
   const router = useRouter();
 
   const { data: categories, isPending: categoriesLoading } = useCategories();
@@ -78,7 +89,12 @@ const Home = () => {
         data={favouriteDishes}
         loading={dishesLoading}
         renderCard={(dish) => (
-          <DishCard item={dish} onPress={handleDishSelect} />
+          <DishCard
+            item={dish}
+            onPress={handleDishSelect}
+            isFavourited={favouriteIds.has(dish.id)}
+            onFavouritePress={toggleFavourite}
+          />
         )}
       />
 

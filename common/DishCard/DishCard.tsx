@@ -1,5 +1,13 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
-import { Image, Pressable, Text, View, Dimensions, StyleSheet } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from "react-native";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { useHomeStore } from "store/homeStore";
@@ -9,21 +17,34 @@ import { wp } from "utils/dimensions";
 interface DishCardProps {
   item: Dish;
   onPress: (dish: Dish) => void;
+  isFavourited?: boolean;
+  onFavouritePress?: (dish: Dish) => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 const CARD_WIDTH = wp(72);
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const IMAGE_HEIGHT = Math.round((CARD_WIDTH / SCREEN_WIDTH) * 140);
+const IMAGE_HEIGHT = wp(27);
+const RIBBON_CORNER = wp(19);
+const RIBBON_WIDTH = wp(23.5);
+const RIBBON_TOP = wp(4.3);
+const RIBBON_LEFT = -wp(5.9);
 const ICON_SMALL = wp(3);
 const ICON_MED = wp(4.5);
 
-const DishCard = ({ item, onPress }: DishCardProps) => {
+const DishCard = ({
+  item,
+  onPress,
+  isFavourited = false,
+  onFavouritePress,
+  style,
+}: DishCardProps) => {
   const { incrementCart } = useHomeStore();
 
   return (
     <Pressable
       style={({ pressed }) => [
         styles.shadowContainer,
+        style,
         pressed && { opacity: 0.85 },
       ]}
       onPress={() => onPress(item)}
@@ -31,21 +52,44 @@ const DishCard = ({ item, onPress }: DishCardProps) => {
       accessibilityLabel={`${item.name}, delivery ${item.deliveryTime}`}
     >
       <View style={styles.card}>
-        {item.discount && (
-          <View style={styles.badge}>
-            <MaterialIcons
-              name="local-offer"
-              size={ICON_SMALL}
-              color={Colors.white}
-            />
-            <Text style={styles.badgeText}>{item.discount}</Text>
-          </View>
-        )}
+        {item.discount &&
+          (item.discount === "Deal" ? (
+            <View style={styles.ribbonWrap}>
+              <View style={styles.ribbon}>
+                <Text style={styles.ribbonText}>{item.discount}</Text>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.badge}>
+              <MaterialIcons
+                name="local-offer"
+                size={ICON_SMALL}
+                color={Colors.white}
+              />
+              <Text style={styles.badgeText}>{item.discount}</Text>
+            </View>
+          ))}
         <Image
           source={{ uri: item.image }}
           style={styles.image}
           accessibilityLabel={item.name}
         />
+        {onFavouritePress && (
+          <Pressable
+            style={styles.heartButton}
+            onPress={() => onFavouritePress(item)}
+            accessibilityRole="button"
+            accessibilityLabel={
+              isFavourited ? "Remove from favourites" : "Add to favourites"
+            }
+          >
+            <MaterialIcons
+              name={isFavourited ? "favorite" : "favorite-border"}
+              size={ICON_MED}
+              color={isFavourited ? Colors.primary : Colors.white}
+            />
+          </Pressable>
+        )}
         <View style={styles.body}>
           <View style={styles.nameRow}>
             <Text style={styles.name} numberOfLines={1}>
@@ -115,10 +159,41 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.xs - 1,
     fontWeight: "700",
   },
+  ribbonWrap: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: RIBBON_CORNER,
+    height: RIBBON_CORNER,
+    overflow: "hidden",
+    zIndex: 1,
+  },
+  ribbon: {
+    position: "absolute",
+    top: RIBBON_TOP,
+    left: RIBBON_LEFT,
+    width: RIBBON_WIDTH,
+    backgroundColor: Colors.primary,
+    alignItems: "center",
+    paddingVertical: 5,
+    transform: [{ rotate: "-45deg" }],
+  },
+  ribbonText: {
+    color: Colors.white,
+    fontSize: FontSizes.xs,
+    fontWeight: "700",
+  },
   image: {
     width: "100%",
     height: IMAGE_HEIGHT,
     resizeMode: "cover",
+  },
+  heartButton: {
+    position: "absolute",
+    top: Spacing.sm,
+    right: Spacing.sm,
+    zIndex: 1,
+    padding: Spacing.xs,
   },
   body: {
     padding: Spacing.md,
