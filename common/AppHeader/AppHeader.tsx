@@ -1,18 +1,29 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { useEffect } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { useHomeStore } from "store/homeStore";
 
-interface SearchHeaderProps {
+interface AppHeaderProps {
   title: string;
+  // When provided, a search input is shown between the title and cart icon
+  onSearch?: (query: string) => void;
   placeholder?: string;
   defaultQuery?: string;
-  onSearch: (query: string) => void;
+  // true  → component owns its orange background + padding (use with headerShown: false)
+  // false → content only; tab navigator provides the background (default)
+  standalone?: boolean;
 }
 
 const searchSchema = z.object({
@@ -22,16 +33,17 @@ const searchSchema = z.object({
     .max(100)
     .transform((val) => val.replace(/<[^>]*>/g, "")),
 });
-
 type SearchForm = z.infer<typeof searchSchema>;
 
-const SearchHeader = ({
+const AppHeader = ({
   title,
+  onSearch,
   placeholder = "Search...",
   defaultQuery = "",
-  onSearch,
-}: SearchHeaderProps) => {
+  standalone = false,
+}: AppHeaderProps) => {
   const { cartCount } = useHomeStore();
+  const { width } = useWindowDimensions();
 
   const { control, handleSubmit, setValue } = useForm<SearchForm>({
     resolver: zodResolver(searchSchema),
@@ -42,27 +54,33 @@ const SearchHeader = ({
     setValue("query", defaultQuery);
   }, [defaultQuery, setValue]);
 
-  return (
-    <View style={styles.header}>
-      <Text style={styles.title}>{title}</Text>
-      <Controller
-        control={control}
-        name="query"
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.searchInput}
-            placeholder={placeholder}
-            placeholderTextColor={Colors.gray4}
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            returnKeyType="search"
-            onSubmitEditing={handleSubmit(({ query }) => onSearch(query))}
-            accessibilityLabel={`Search ${title}`}
-            maxLength={100}
-          />
-        )}
-      />
+  const content = (
+    <>
+      <Text style={styles.title} numberOfLines={1}>
+        {title}
+      </Text>
+
+      {onSearch && (
+        <Controller
+          control={control}
+          name="query"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.searchInput}
+              placeholder={placeholder}
+              placeholderTextColor={Colors.gray4}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              returnKeyType="search"
+              onSubmitEditing={handleSubmit(({ query }) => onSearch(query))}
+              accessibilityLabel={`Search ${title}`}
+              maxLength={100}
+            />
+          )}
+        />
+      )}
+
       <Pressable
         style={styles.cartButton}
         accessibilityRole="button"
@@ -75,12 +93,21 @@ const SearchHeader = ({
           </View>
         )}
       </Pressable>
-    </View>
+    </>
+  );
+
+  if (standalone) {
+    return <View style={styles.standaloneContainer}>{content}</View>;
+  }
+
+  // Tab navigator mode: constrain width so it fits the header slot
+  return (
+    <View style={[styles.navContainer, { width: width - 30 }]}>{content}</View>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
+  standaloneContainer: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: Colors.primary,
@@ -88,10 +115,17 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     gap: Spacing.sm,
   },
+  navContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: Spacing.xs,
+    gap: Spacing.sm,
+  },
   title: {
     color: Colors.white,
     fontSize: FontSizes.md,
     fontWeight: "700",
+    flexShrink: 1,
   },
   searchInput: {
     flex: 1,
@@ -104,6 +138,7 @@ const styles = StyleSheet.create({
   },
   cartButton: {
     padding: Spacing.xs,
+    marginLeft: "auto",
   },
   cartBadge: {
     position: "absolute",
@@ -124,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchHeader;
+export default AppHeader;

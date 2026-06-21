@@ -1,11 +1,13 @@
 import { Tabs } from "expo-router";
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 
-import CustomHeader from "common/CustomHeader";
-
+import AppHeader from "common/AppHeader";
 import { Colors } from "assets/styles/theme";
+import { useHomeStore } from "store/homeStore";
 
 export default function Layout() {
+  const { location } = useHomeStore();
+
   return (
     <Tabs
       screenOptions={{
@@ -20,8 +22,8 @@ export default function Layout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Search",
-          headerTitle: () => <CustomHeader />,
+          title: "Home",
+          headerTitle: () => <AppHeader title={location} />,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="search" size={24} color={color} />
           ),
@@ -32,6 +34,10 @@ export default function Layout() {
         options={{
           title: "Dishes",
           headerShown: false,
+          headerStyle: {
+            backgroundColor: Colors.primary,
+          },
+          headerTintColor: Colors.primaryLight,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="fastfood" size={24} color={color} />
           ),
@@ -41,7 +47,7 @@ export default function Layout() {
         name="restaurantSearch"
         options={{
           title: "Restaurant",
-          headerTitle: () => <CustomHeader />,
+          headerTitle: () => <AppHeader title="Restaurant" />,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="restaurant" size={24} color={color} />
           ),
@@ -51,7 +57,7 @@ export default function Layout() {
         name="reservations"
         options={{
           title: "Reservation",
-          headerTitle: () => <CustomHeader />,
+          headerTitle: () => <AppHeader title="Reservations" />,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="calendar-month" size={24} color={color} />
           ),
@@ -61,7 +67,7 @@ export default function Layout() {
         name="profile"
         options={{
           title: "Profile",
-          headerTitle: () => <CustomHeader />,
+          headerTitle: () => <AppHeader title="Profile" />,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="person" size={24} color={color} />
           ),

@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import DishCard from "common/DishCard";
 import FilterStrip from "common/FilterStrip";
-import SearchHeader from "common/SearchHeader";
+import AppHeader from "common/AppHeader";
 import { useDishSearch } from "hooks/useDishSearch";
 import SkeletonCard from "screens/Home/components/SkeletonCard";
 import { Dish } from "types/home";
@@ -90,13 +90,14 @@ const DishSearch = () => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <SearchHeader
+      <AppHeader
         title="Dishes"
         placeholder="Search for dishes"
         defaultQuery={searchTerm}
         onSearch={(q) =>
           router.push({ pathname: "/(tabs)/dishSearch", params: { query: q } })
         }
+        standalone
       />
 
       <Text style={styles.resultsSummary}>
