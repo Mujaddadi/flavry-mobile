@@ -35,3 +35,17 @@ export interface Restaurant {
   deliveryDiscount?: string;
   deliveryTime: string;
 }
+
+export interface DishSearchParams {
+  query?: string;
+  category?: string;
+  filters?: string[];
+  page?: number;
+}
+
+export interface DishSearchResult {
+  dishes: Dish[];
+  total: number;
+  page: number;
+  hasMore: boolean;
+}

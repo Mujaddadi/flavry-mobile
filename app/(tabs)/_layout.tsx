@@ -31,7 +31,7 @@ export default function Layout() {
         name="dishSearch"
         options={{
           title: "Dishes",
-          headerTitle: () => <CustomHeader />,
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="fastfood" size={24} color={color} />
           ),

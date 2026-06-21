@@ -1,5 +1,12 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
-import { Image, Pressable, Text, View, Dimensions, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { useHomeStore } from "store/homeStore";
@@ -9,6 +16,9 @@ import { wp } from "utils/dimensions";
 interface DishCardProps {
   item: Dish;
   onPress: (dish: Dish) => void;
+  isFavourited?: boolean;
+  onFavouritePress?: (dish: Dish) => void;
+  width?: number;
 }
 
 const CARD_WIDTH = wp(72);
@@ -17,13 +27,20 @@ const IMAGE_HEIGHT = Math.round((CARD_WIDTH / SCREEN_WIDTH) * 140);
 const ICON_SMALL = wp(3);
 const ICON_MED = wp(4.5);
 
-const DishCard = ({ item, onPress }: DishCardProps) => {
+const DishCard = ({
+  item,
+  onPress,
+  isFavourited = false,
+  onFavouritePress,
+  width = CARD_WIDTH,
+}: DishCardProps) => {
   const { incrementCart } = useHomeStore();
 
   return (
     <Pressable
       style={({ pressed }) => [
         styles.shadowContainer,
+        { width },
         pressed && { opacity: 0.85 },
       ]}
       onPress={() => onPress(item)}
@@ -46,6 +63,22 @@ const DishCard = ({ item, onPress }: DishCardProps) => {
           style={styles.image}
           accessibilityLabel={item.name}
         />
+        {onFavouritePress && (
+          <Pressable
+            style={styles.heartButton}
+            onPress={() => onFavouritePress(item)}
+            accessibilityRole="button"
+            accessibilityLabel={
+              isFavourited ? "Remove from favourites" : "Add to favourites"
+            }
+          >
+            <MaterialIcons
+              name={isFavourited ? "favorite" : "favorite-border"}
+              size={ICON_MED}
+              color={isFavourited ? Colors.primary : Colors.white}
+            />
+          </Pressable>
+        )}
         <View style={styles.body}>
           <View style={styles.nameRow}>
             <Text style={styles.name} numberOfLines={1}>
@@ -82,7 +115,6 @@ const DishCard = ({ item, onPress }: DishCardProps) => {
 
 const styles = StyleSheet.create({
   shadowContainer: {
-    width: CARD_WIDTH,
     marginRight: Spacing.md,
     marginBottom: Spacing.md,
     borderRadius: 12,
@@ -119,6 +151,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: IMAGE_HEIGHT,
     resizeMode: "cover",
+  },
+  heartButton: {
+    position: "absolute",
+    top: Spacing.sm,
+    right: Spacing.sm,
+    zIndex: 1,
+    padding: Spacing.xs,
   },
   body: {
     padding: Spacing.md,
