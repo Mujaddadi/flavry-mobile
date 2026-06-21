@@ -11,6 +11,17 @@
     "test": "jest",
     "test-watch": "jest --watchAll"
   },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx,js,jsx}",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/babel.config.js",
+      "!**/expo-env.d.ts",
+      "!**/.expo/**"
+    ]
+  },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.4.3",
     "@hookform/resolvers": "^5.4.0",
