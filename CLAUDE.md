@@ -30,6 +30,7 @@ Allow users to discover dishes and restaurants, search for food, browse categori
 
 ## Conventions
 
+- All components are in their respective folders with the index.ts file that exports the component
 - Use react-hook-form for managing form state and zod for validation
 - Every component should be responsive. Use Dimensions API.
 - Use percentage-based Dimensions.

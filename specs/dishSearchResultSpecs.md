@@ -40,7 +40,7 @@ Display a scrollable list of dish results matching a user's search query or sele
 - A sort icon (three horizontal lines) sits at the far right; tapping opens the sort/filter sheet
 - Horizontal scroll if chips overflow the screen width
 - `accessibilityRole="button"` on each chip; `accessibilityState={{ selected: true/false }}`
-- This should be added to the common component library
+- This should be added to the common component library. Follow the way the DishCard component is structured
 
 ### 4. Dish Result List
 
