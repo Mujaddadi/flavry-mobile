@@ -3,7 +3,7 @@ export enum SectionType {
   RESTAURANT = "restaurant",
 }
 
-export enum SectionType {
+export enum FilterType {
   DELIVERY = "Delivery",
   PICKUP = "Pickup",
   OFFERS = "Offers",
