@@ -25,6 +25,7 @@ const CARD_WIDTH = wp(75);
 const IMAGE_HEIGHT = wp(30);
 const ICON_SMALL = wp(3);
 const ICON_MED = wp(4.5);
+const ICON_HEART = wp(4.95);
 
 const RestaurantCard = ({
   item,
@@ -70,7 +71,7 @@ const RestaurantCard = ({
         >
           <MaterialIcons
             name={isFavourited ? "favorite" : "favorite-border"}
-            size={ICON_MED}
+            size={ICON_HEART}
             color={isFavourited ? Colors.primary : Colors.white}
           />
         </Pressable>
