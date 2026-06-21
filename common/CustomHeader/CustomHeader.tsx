@@ -17,7 +17,7 @@ const CustomHeader = () => {
   const { width } = useWindowDimensions();
   const { location, cartCount } = useHomeStore();
   //This is to show the current screen name in the header
-  const isHome = currentRoute == "/";
+  const isHome = currentRoute === "/";
 
   return (
     <View style={[styles.container, { width: width - 30 }]}>
