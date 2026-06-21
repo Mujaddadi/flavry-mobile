@@ -4,7 +4,7 @@ Flavry is a food discovery and delivery app for UK audiences.
 
 ## Goal
 
-Display a scrollable list of restaurant results matching a user's search query or selected restaurant from home screen. 
+Display a scrollable list of restaurant results matching a user's search query or selected restaurant from home screen.
 Clicking the card opens the restaurant detail screen
 
 ---
@@ -41,7 +41,7 @@ Clicking the card opens the restaurant detail screen
 - **Loading state:** 3–4 `SkeletonCard` placeholders while the first page fetches
 - **Empty state:** Centred message `"No results found for '{query}'"` with a suggestion to try a different search term
 - **Infinite scroll:** `onEndReached` triggers the next page; `onEndReachedThreshold={0.3}`; a loading spinner renders in the list footer while subsequent pages fetch
-- `useRestaurantSearch` hook does not exist yet — must be created in `hooks/`
+- `useRestaurantSearch` hook is created in `hooks/useRestaurantSearch.ts`
 
 ### 5. Bottom Navigation Bar
 
@@ -51,7 +51,7 @@ Clicking the card opens the restaurant detail screen
 
 ## Data and State
 
-- Route params: `query` (string) and/or `category` (string) and/or `restaurant` (string)
+- Route params: `query` (string) and/or `category` (string) and/or `id` (string)
 - Data fetched via react-query hook (`useRestaurantSearch({ query, filters })`)
 - Filter state is a local component state; triggers re-fetch on change
 - Favourite state persisted via API call with optimistic update
@@ -111,6 +111,6 @@ Use theme.ts for color values
 ---
 
 ## Out of Scope
+
 - Cart screen
 - Location picker
-

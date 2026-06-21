@@ -1,11 +1,12 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 import {
-  Dimensions,
   Image,
   Pressable,
+  StyleProp,
   StyleSheet,
   Text,
   View,
+  ViewStyle,
 } from "react-native";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
@@ -17,12 +18,11 @@ interface RestaurantCardProps {
   onPress: (restaurant: Restaurant) => void;
   isFavourited?: boolean;
   onFavouritePress?: (restaurant: Restaurant) => void;
-  width?: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 const CARD_WIDTH = wp(75);
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const IMAGE_HEIGHT = Math.round((CARD_WIDTH / SCREEN_WIDTH) * 140);
+const IMAGE_HEIGHT = wp(28);
 const ICON_SMALL = wp(3);
 const ICON_MED = wp(4.5);
 
@@ -31,12 +31,12 @@ const RestaurantCard = ({
   onPress,
   isFavourited = false,
   onFavouritePress,
-  width = CARD_WIDTH,
+  style,
 }: RestaurantCardProps) => (
   <Pressable
     style={({ pressed }) => [
       styles.shadowContainer,
-      { width },
+      style,
       pressed && { opacity: 0.85 },
     ]}
     onPress={() => onPress(item)}
@@ -110,6 +110,7 @@ const RestaurantCard = ({
 
 const styles = StyleSheet.create({
   shadowContainer: {
+    width: CARD_WIDTH,
     marginRight: Spacing.md,
     marginBottom: Spacing.md,
     borderRadius: 12,
@@ -176,9 +177,9 @@ const styles = StyleSheet.create({
   closedBadge: {
     borderWidth: 1,
     borderColor: Colors.primary,
-    borderRadius: 6,
+    borderRadius: wp(1.6),
     paddingHorizontal: Spacing.sm,
-    paddingVertical: 2,
+    paddingVertical: wp(0.5),
   },
   closedText: {
     fontSize: FontSizes.xs,

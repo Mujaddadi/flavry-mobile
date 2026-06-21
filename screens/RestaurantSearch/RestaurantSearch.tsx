@@ -1,16 +1,21 @@
 import { FlashList } from "@shopify/flash-list";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 
-import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import AppHeader from "common/AppHeader";
 import FilterStrip from "common/FilterStrip";
 import RestaurantCard from "common/RestaurantCard";
 import { useRestaurantSearch } from "hooks/useRestaurantSearch";
+import {
+  searchResultCardStyle,
+  searchResultStyles as styles,
+} from "screens/searchResultStyles";
 import SkeletonCard from "screens/Home/components/SkeletonCard";
 import { Restaurant } from "types/home";
 import { wp } from "utils/dimensions";
+
+import { Colors } from "assets/styles/theme";
 
 const CARD_WIDTH = wp(90);
 const SKELETON_HEIGHT = 220;
@@ -60,9 +65,9 @@ const RestaurantSearch = () => {
       <RestaurantCard
         item={item}
         onPress={() => {}}
-        width={CARD_WIDTH}
         isFavourited={favouriteIds.has(item.id)}
         onFavouritePress={toggleFavourite}
+        style={searchResultCardStyle}
       />
     ),
     [favouriteIds, toggleFavourite],
@@ -136,47 +141,5 @@ const RestaurantSearch = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  resultsSummary: {
-    fontSize: FontSizes.sm,
-    color: Colors.black2,
-    paddingHorizontal: Spacing.reg,
-    paddingTop: Spacing.md,
-    paddingBottom: Spacing.xs,
-  },
-  list: {
-    paddingHorizontal: Spacing.reg,
-    paddingTop: Spacing.md,
-    paddingBottom: Spacing.xxxl,
-  },
-  skeletonContainer: {
-    paddingHorizontal: Spacing.reg,
-    paddingTop: Spacing.md,
-    gap: Spacing.md,
-  },
-  footerLoader: {
-    paddingVertical: Spacing.lg,
-  },
-  emptyState: {
-    alignItems: "center",
-    paddingTop: Spacing.xxxl,
-    gap: Spacing.sm,
-  },
-  emptyText: {
-    fontSize: FontSizes.md,
-    fontWeight: "600",
-    color: Colors.black2,
-    textAlign: "center",
-  },
-  emptyHint: {
-    fontSize: FontSizes.sm,
-    color: Colors.gray3,
-  },
-});
 
 export default RestaurantSearch;

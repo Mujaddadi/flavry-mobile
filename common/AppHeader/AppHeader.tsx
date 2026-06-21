@@ -1,17 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { useEffect } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  useWindowDimensions,
-} from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { useHomeStore } from "store/homeStore";
@@ -46,7 +39,6 @@ const AppHeader = ({
   standalone = false,
 }: AppHeaderProps) => {
   const { cartCount } = useHomeStore();
-  const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
   const { control, handleSubmit, setValue } = useForm<SearchForm>({
@@ -110,9 +102,7 @@ const AppHeader = ({
     );
   }
 
-  return (
-    <View style={[styles.navContainer, { width: width - 30 }]}>{content}</View>
-  );
+  return <View style={[styles.navContainer, { width: "95%" }]}>{content}</View>;
 };
 
 const styles = StyleSheet.create({

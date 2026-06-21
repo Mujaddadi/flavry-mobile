@@ -1,11 +1,12 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 import {
-  Dimensions,
   Image,
   Pressable,
+  StyleProp,
   StyleSheet,
   Text,
   View,
+  ViewStyle,
 } from "react-native";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
@@ -18,12 +19,15 @@ interface DishCardProps {
   onPress: (dish: Dish) => void;
   isFavourited?: boolean;
   onFavouritePress?: (dish: Dish) => void;
-  width?: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 const CARD_WIDTH = wp(72);
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const IMAGE_HEIGHT = Math.round((CARD_WIDTH / SCREEN_WIDTH) * 140);
+const IMAGE_HEIGHT = wp(27);
+const RIBBON_CORNER = wp(19);
+const RIBBON_WIDTH = wp(23.5);
+const RIBBON_TOP = wp(4.3);
+const RIBBON_LEFT = -wp(5.9);
 const ICON_SMALL = wp(3);
 const ICON_MED = wp(4.5);
 
@@ -32,7 +36,7 @@ const DishCard = ({
   onPress,
   isFavourited = false,
   onFavouritePress,
-  width = CARD_WIDTH,
+  style,
 }: DishCardProps) => {
   const { incrementCart } = useHomeStore();
 
@@ -40,7 +44,7 @@ const DishCard = ({
     <Pressable
       style={({ pressed }) => [
         styles.shadowContainer,
-        { width },
+        style,
         pressed && { opacity: 0.85 },
       ]}
       onPress={() => onPress(item)}
@@ -122,6 +126,7 @@ const DishCard = ({
 
 const styles = StyleSheet.create({
   shadowContainer: {
+    width: CARD_WIDTH,
     marginRight: Spacing.md,
     marginBottom: Spacing.md,
     borderRadius: 12,
@@ -158,16 +163,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    width: 72,
-    height: 72,
+    width: RIBBON_CORNER,
+    height: RIBBON_CORNER,
     overflow: "hidden",
     zIndex: 1,
   },
   ribbon: {
     position: "absolute",
-    top: 16,
-    left: -22,
-    width: 88,
+    top: RIBBON_TOP,
+    left: RIBBON_LEFT,
+    width: RIBBON_WIDTH,
     backgroundColor: Colors.primary,
     alignItems: "center",
     paddingVertical: 5,
