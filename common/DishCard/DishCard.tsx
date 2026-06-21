@@ -23,7 +23,7 @@ interface DishCardProps {
 }
 
 const CARD_WIDTH = wp(72);
-const IMAGE_HEIGHT = wp(27);
+const IMAGE_HEIGHT = wp(30);
 const RIBBON_CORNER = wp(19);
 const RIBBON_WIDTH = wp(23.5);
 const RIBBON_TOP = wp(4.3);

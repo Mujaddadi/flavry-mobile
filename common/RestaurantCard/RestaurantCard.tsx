@@ -22,7 +22,7 @@ interface RestaurantCardProps {
 }
 
 const CARD_WIDTH = wp(75);
-const IMAGE_HEIGHT = wp(28);
+const IMAGE_HEIGHT = wp(30);
 const ICON_SMALL = wp(3);
 const ICON_MED = wp(4.5);
 
