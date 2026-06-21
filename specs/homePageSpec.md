@@ -158,9 +158,9 @@ Use colors.md for color values
 
 ## Constraints
 
-- Tech stack: Expo, React Native, TypeScript, unistyles, react-query, FlashList, Zustand, react-hook-form, zod
+- Tech stack: Expo, React Native, TypeScript, react-query, FlashList, Zustand, react-hook-form, zod
 - No new npm dependencies without approval
-- Styles via unistyles only (no inline StyleSheet objects)
+- No inline StyleSheet objects
 - Animations via react-native-reanimated only
 - Types in `types/` folder
 - The page navigation is already there, so don't add any

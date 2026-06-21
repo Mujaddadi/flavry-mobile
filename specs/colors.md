@@ -5,9 +5,11 @@ Use these values as unistyles theme tokens. Reference tokens by name in all comp
 ### Brand
 
 | Token               | Hex       | Usage                                                                         |
-| ------------------- | --------- | ----------------------------------------------------------------------------- |
+| ------------------- | --------- |-------------------------------------------------------------------------------|
 | `primary`           | `#f36523` | Buttons, header bar, active states, badges                                    |
 | `primaryBackground` | `#f36523` | Screen/card backgrounds (⚠ value cut off in spec image — confirm with design) |
+| `primaryLight`      | `#FEF0E9` | used in some UI elements                                                      |
+
 
 ### Logo
 

@@ -1,16 +1,16 @@
 # Project: Flavry
 
-Food discovery app meant for UK audiences
+Flavry is a food discovery and delivery app for UK audiences.
+Figma reference: https://www.figma.com/design/ty7JcXnIk2GWdi5Nv6NlC7/UIs?node-id=0-1
 
 ## Objectives
 
-Responsive app
-Follow the accessibility and follow OWASP top 10
+Allow users to discover dishes and restaurants, search for food, browse categories, view promotions, and add items to their cart — all from a single scrollable home screen.
 
 ## Architecture
 
 - Expo, React Native, TypeScript, Jest, axios, dayjs, zustand, react-hook-form, zod
-- expo-router, @tanstack/react-query, react-native-reanimated, react-native-unistyles, flash-list
+- expo-router, @tanstack/react-query, react-native-reanimated, flash-list
 - @react-native-vector-icons/material-design-icons for icons
 - Eslint, Prettier
 
@@ -37,7 +37,6 @@ Follow the accessibility and follow OWASP top 10
 - Use Eslint and Prettier for code formatting
 - The types should be inside the types folder
 - react-native-reanimated for animations
-- unistyle for styles
 - Use TypeScript
 - Use code comments wherever necessary
 
