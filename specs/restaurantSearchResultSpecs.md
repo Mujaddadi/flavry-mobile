@@ -5,7 +5,7 @@ Flavry is a food discovery and delivery app for UK audiences.
 ## Goal
 
 Display a scrollable list of restaurant results matching a user's search query or selected restaurant from home screen. 
-Clicking n the cart opent the restaurant detail screen
+Clicking the card opens the restaurant detail screen
 
 ---
 
