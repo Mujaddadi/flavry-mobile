@@ -2,7 +2,9 @@ import { StyleSheet } from "react-native";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 
-export const searchResultCardStyle = { width: "100%" as const, marginRight: 0 };
+export const searchResultCardStyle = {
+  width: "100%" as const,
+};
 
 export const searchResultStyles = StyleSheet.create({
   container: {

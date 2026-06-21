@@ -23,13 +23,14 @@ interface DishCardProps {
 }
 
 const CARD_WIDTH = wp(72);
-const IMAGE_HEIGHT = wp(27);
+const IMAGE_HEIGHT = wp(30);
 const RIBBON_CORNER = wp(19);
 const RIBBON_WIDTH = wp(23.5);
 const RIBBON_TOP = wp(4.3);
 const RIBBON_LEFT = -wp(5.9);
 const ICON_SMALL = wp(3);
 const ICON_MED = wp(4.5);
+const ICON_HEART = wp(5);
 
 const DishCard = ({
   item,
@@ -85,7 +86,7 @@ const DishCard = ({
           >
             <MaterialIcons
               name={isFavourited ? "favorite" : "favorite-border"}
-              size={ICON_MED}
+              size={ICON_HEART}
               color={isFavourited ? Colors.primary : Colors.white}
             />
           </Pressable>
