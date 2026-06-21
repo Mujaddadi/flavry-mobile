@@ -1,5 +1,4 @@
 import { defineConfig } from "eslint/config";
-// @ts-ignore
 import expoConfig from "eslint-config-expo/flat";
 
 import eslintConfigPrettier from "eslint-config-prettier";
