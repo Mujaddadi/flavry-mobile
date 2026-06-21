@@ -34,6 +34,21 @@ export interface Restaurant {
   image: string;
   deliveryDiscount?: string;
   deliveryTime: string;
+  isClosed?: boolean;
+}
+
+export interface RestaurantSearchParams {
+  query?: string;
+  category?: string;
+  filters?: string[];
+  page?: number;
+}
+
+export interface RestaurantSearchResult {
+  restaurants: Restaurant[];
+  total: number;
+  page: number;
+  hasMore: boolean;
 }
 
 export interface DishSearchParams {

@@ -9,20 +9,23 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { useHomeStore } from "store/homeStore";
 
+// Shared with headerStyle.height in _layout.tsx so nav and standalone modes match
+export const HEADER_BAR_HEIGHT = 56;
+
 interface AppHeaderProps {
   title: string;
-  // When provided, a search input is shown between the title and cart icon
   onSearch?: (query: string) => void;
   placeholder?: string;
   defaultQuery?: string;
-  // true  → component owns its orange background + padding (use with headerShown: false)
-  // false → content only; tab navigator provides the background (default)
+  // true  → owns orange background + safe-area inset (use with headerShown: false)
+  // false → content only; tab navigator provides background (default)
   standalone?: boolean;
 }
 
@@ -44,6 +47,7 @@ const AppHeader = ({
 }: AppHeaderProps) => {
   const { cartCount } = useHomeStore();
   const { width } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
 
   const { control, handleSubmit, setValue } = useForm<SearchForm>({
     resolver: zodResolver(searchSchema),
@@ -97,27 +101,35 @@ const AppHeader = ({
   );
 
   if (standalone) {
-    return <View style={styles.standaloneContainer}>{content}</View>;
+    // standaloneOuter provides the orange background that extends behind the status bar.
+    // standaloneInner is a fixed-height row that sits below the status bar.
+    return (
+      <View style={[styles.standaloneOuter, { paddingTop: insets.top }]}>
+        <View style={styles.standaloneInner}>{content}</View>
+      </View>
+    );
   }
 
-  // Tab navigator mode: constrain width so it fits the header slot
   return (
     <View style={[styles.navContainer, { width: width - 30 }]}>{content}</View>
   );
 };
 
 const styles = StyleSheet.create({
-  standaloneContainer: {
+  standaloneOuter: {
+    backgroundColor: Colors.primary,
+  },
+  standaloneInner: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: Colors.primary,
+    height: HEADER_BAR_HEIGHT,
     paddingHorizontal: Spacing.reg,
-    paddingVertical: Spacing.sm,
     gap: Spacing.sm,
   },
   navContainer: {
     flexDirection: "row",
     alignItems: "center",
+    height: HEADER_BAR_HEIGHT,
     paddingHorizontal: Spacing.xs,
     gap: Spacing.sm,
   },

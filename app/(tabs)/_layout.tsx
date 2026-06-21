@@ -47,7 +47,7 @@ export default function Layout() {
         name="restaurantSearch"
         options={{
           title: "Restaurant",
-          headerTitle: () => <AppHeader title="Restaurant" />,
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="restaurant" size={24} color={color} />
           ),
