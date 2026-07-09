@@ -326,6 +326,18 @@ const MOCK_POPULAR_ADDONS: PopularAddon[] = [
     image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200",
     price: 150,
   },
+  {
+    id: "a4",
+    name: "Chilli cheese bites",
+    image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200",
+    price: 150,
+  },
+  {
+    id: "a5",
+    name: "Chicken wings",
+    image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200",
+    price: 150,
+  },
 ];
 
 // TODO: Replace with real API call when backend is ready.
