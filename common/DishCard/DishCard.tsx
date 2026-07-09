@@ -1,4 +1,5 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
+import { useCallback } from "react";
 import {
   Image,
   Pressable,
@@ -10,6 +11,7 @@ import {
 } from "react-native";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
+import { useCartStore } from "store/cartStore";
 import { useHomeStore } from "store/homeStore";
 import { Dish } from "types/home";
 import { wp } from "utils/dimensions";
@@ -40,6 +42,22 @@ const DishCard = ({
   style,
 }: DishCardProps) => {
   const { incrementCart } = useHomeStore();
+
+  const handleAddToCart = useCallback(() => {
+    useCartStore.getState().addItem({
+      id: item.id,
+      dishId: item.id,
+      name: item.name,
+      description: "",
+      image: item.image,
+      price: item.price,
+      quantity: 1,
+      restaurantId: item.restaurantId,
+      restaurantName: item.restaurantName,
+      restaurantLogo: "",
+    });
+    incrementCart();
+  }, [item, incrementCart]);
 
   return (
     <Pressable
@@ -104,7 +122,7 @@ const DishCard = ({
           <View style={styles.footer}>
             <Pressable
               style={styles.addButton}
-              onPress={incrementCart}
+              onPress={handleAddToCart}
               accessibilityRole="button"
               accessibilityLabel={`Add ${item.name} to cart`}
             >

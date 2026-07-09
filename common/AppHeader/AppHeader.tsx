@@ -6,6 +6,8 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Controller, useForm } from "react-hook-form";
 
+import { useRouter } from "expo-router";
+
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { useHomeStore } from "store/homeStore";
 
@@ -40,6 +42,7 @@ const AppHeader = ({
 }: AppHeaderProps) => {
   const { cartCount } = useHomeStore();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
 
   const { control, handleSubmit, setValue } = useForm<SearchForm>({
     resolver: zodResolver(searchSchema),
@@ -79,6 +82,7 @@ const AppHeader = ({
 
       <Pressable
         style={styles.cartButton}
+        onPress={() => router.push("/(tabs)/cart")}
         accessibilityRole="button"
         accessibilityLabel={`Cart, ${cartCount} item${cartCount === 1 ? "" : "s"}`}
       >

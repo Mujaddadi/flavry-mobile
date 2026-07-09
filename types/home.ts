@@ -20,6 +20,7 @@ export interface PromoBanner {
 export interface Dish {
   id: string;
   name: string;
+  restaurantId: string;
   restaurantName: string;
   price: number;
   image: string;

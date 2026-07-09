@@ -10,6 +10,7 @@ import {
   RestaurantSearchParams,
   RestaurantSearchResult,
 } from "types/home";
+import { PopularAddon } from "types/cart";
 
 // TODO: Mock data — swap these functions for real api calls when the backend is ready.
 
@@ -63,6 +64,7 @@ export const fetchFavouriteDishes = async (): Promise<Dish[]> => [
   {
     id: "1",
     name: "Zinger Burger",
+    restaurantId: "r1",
     restaurantName: "Burger King Espoo",
     price: 420,
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
@@ -72,6 +74,7 @@ export const fetchFavouriteDishes = async (): Promise<Dish[]> => [
   {
     id: "2",
     name: "Margherita Pizza",
+    restaurantId: "r2",
     restaurantName: "Pizza Palace",
     price: 350,
     image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
@@ -80,6 +83,7 @@ export const fetchFavouriteDishes = async (): Promise<Dish[]> => [
   {
     id: "3",
     name: "Salmon Sushi",
+    restaurantId: "r3",
     restaurantName: "Sushi Hub",
     price: 580,
     image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400",
@@ -128,6 +132,7 @@ const MOCK_SEARCH_DISHES: Dish[] = [
   {
     id: "s1",
     name: "Zinger Burger",
+    restaurantId: "r1",
     restaurantName: "Burger King Espoo",
     price: 420,
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
@@ -137,6 +142,7 @@ const MOCK_SEARCH_DISHES: Dish[] = [
   {
     id: "s2",
     name: "Beef Burger",
+    restaurantId: "r3",
     restaurantName: "Road House Espoo",
     price: 500,
     image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=400",
@@ -145,6 +151,7 @@ const MOCK_SEARCH_DISHES: Dish[] = [
   {
     id: "s3",
     name: "Zinger Burger",
+    restaurantId: "r4",
     restaurantName: "Bites Burger Espoo",
     price: 620,
     image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
@@ -153,6 +160,7 @@ const MOCK_SEARCH_DISHES: Dish[] = [
   {
     id: "s4",
     name: "Burger Meal",
+    restaurantId: "r5",
     restaurantName: "Burger Shop Espoo",
     price: 1020,
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400",
@@ -162,6 +170,7 @@ const MOCK_SEARCH_DISHES: Dish[] = [
   {
     id: "s5",
     name: "Chicken Burger",
+    restaurantId: "r6",
     restaurantName: "Crispy House Espoo",
     price: 380,
     image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400",
@@ -170,6 +179,7 @@ const MOCK_SEARCH_DISHES: Dish[] = [
   {
     id: "s6",
     name: "Double Smash Burger",
+    restaurantId: "r7",
     restaurantName: "Smash Bros Espoo",
     price: 750,
     image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400",
@@ -276,6 +286,32 @@ export const fetchDishDetail = async (dishId: string): Promise<DishDetail> => {
   if (dishId === MOCK_DISH_DETAIL.id || !dishId) return MOCK_DISH_DETAIL;
   return { ...MOCK_DISH_DETAIL, id: dishId };
 };
+
+const MOCK_POPULAR_ADDONS: PopularAddon[] = [
+  {
+    id: "a1",
+    name: "Chicken nuggts",
+    image: "https://images.unsplash.com/photo-1562802378-063ec186a863?w=200",
+    price: 350,
+  },
+  {
+    id: "a2",
+    name: "French Fries",
+    image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=200",
+    price: 250,
+  },
+  {
+    id: "a3",
+    name: "Ice cream",
+    image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200",
+    price: 150,
+  },
+];
+
+// TODO: Replace with real API call when backend is ready.
+export const fetchPopularAddons = async (
+  _restaurantId: string,
+): Promise<PopularAddon[]> => MOCK_POPULAR_ADDONS;
 
 // TODO: Replace with real API call when backend is ready.
 export const fetchRestaurantSearch = async ({
