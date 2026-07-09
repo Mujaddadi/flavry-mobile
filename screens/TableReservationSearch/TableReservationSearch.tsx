@@ -304,6 +304,7 @@ const TableReservationSearch = () => {
 
       {/* Filter bar */}
       <ScrollView
+        style={styles.horizontalControls}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.filterBar}
@@ -372,6 +373,7 @@ const TableReservationSearch = () => {
 
       {/* Date strip */}
       <ScrollView
+        style={styles.horizontalControls}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.dateStrip}
@@ -458,6 +460,9 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.xs,
   },
   // Filter bar
+  horizontalControls: {
+    flexGrow: 0,
+  },
   filterBar: {
     flexDirection: "row",
     alignItems: "center",
@@ -490,6 +495,7 @@ const styles = StyleSheet.create({
   // Date strip — compact 2-line chips
   dateStrip: {
     flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: Spacing.reg,
     paddingBottom: Spacing.xs,
     gap: Spacing.sm,

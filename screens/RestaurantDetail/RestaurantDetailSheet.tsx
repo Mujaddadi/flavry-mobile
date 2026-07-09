@@ -1,4 +1,5 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
+import { MaterialIconsIconName } from "@react-native-vector-icons/material-icons";
 import {
   Image,
   Linking,
@@ -34,7 +35,13 @@ const InfoRow = ({ label, value }: { label: string; value: string }) => (
   </View>
 );
 
-const SectionHeading = ({ icon, title }: { icon: string; title: string }) => (
+const SectionHeading = ({
+  icon,
+  title,
+}: {
+  icon: MaterialIconsIconName;
+  title: string;
+}) => (
   <View style={styles.sectionHeading}>
     <MaterialIcons name={icon} size={SECTION_ICON} color={Colors.primary} />
     <Text style={styles.sectionTitle}>{title}</Text>
