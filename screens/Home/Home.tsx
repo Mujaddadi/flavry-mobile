@@ -53,8 +53,8 @@ const Home = () => {
 
   const handleDishSelect = (dish: Dish) => {
     router.push({
-      pathname: "/(tabs)/dishSearch",
-      params: { dish: dish.name },
+      pathname: "/(tabs)/dishDetail",
+      params: { dishId: dish.id },
     });
   };
 
