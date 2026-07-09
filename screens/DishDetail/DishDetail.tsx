@@ -13,14 +13,13 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
+import CheckboxOption from "common/CheckboxOption";
 import { useDishDetail } from "hooks/useDishDetail";
 import { useHomeStore } from "store/homeStore";
-import { CustomisationGroup } from "types/home";
 import { hp, wp } from "utils/dimensions";
 
 const HERO_HEIGHT = hp(40);
 const ICON_SIZE = wp(5.5);
-const CHECKBOX_SIZE = wp(5);
 const ICON_MED = wp(4.5);
 
 const DishDetail = () => {
@@ -38,9 +37,14 @@ const DishDetail = () => {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    if (!dish) return;
+    if (!dish) {
+      return;
+    }
+
     setIsFavourited(dish.isFavourited ?? false);
+
     const defaults: Record<string, string[]> = {};
+
     dish.customisationGroups.forEach((group) => {
       defaults[group.id] = group.options
         .filter((opt) => opt.isDefault)
@@ -54,24 +58,18 @@ const DishDetail = () => {
     setIsFavourited((prev) => !prev);
   }, []);
 
-  const toggleOption = useCallback(
-    (group: CustomisationGroup, optionId: string) => {
-      setCustomisations((prev) => {
-        const current = prev[group.id] ?? [];
-        if (group.maxSelections === 1) {
-          return { ...prev, [group.id]: [optionId] };
-        }
-        const isSelected = current.includes(optionId);
-        return {
-          ...prev,
-          [group.id]: isSelected
-            ? current.filter((id) => id !== optionId)
-            : [...current, optionId],
-        };
-      });
-    },
-    [],
-  );
+  const toggleOption = useCallback((groupId: string, optionId: string) => {
+    setCustomisations((prev) => {
+      const current = prev[groupId] ?? [];
+      const isSelected = current.includes(optionId);
+      return {
+        ...prev,
+        [groupId]: isSelected
+          ? current.filter((id) => id !== optionId)
+          : [...current, optionId],
+      };
+    });
+  }, []);
 
   const handleShare = useCallback(async () => {
     if (!dish) return;
@@ -219,33 +217,15 @@ const DishDetail = () => {
           <View key={group.id}>
             <View style={styles.section}>
               <Text style={styles.sectionHeading}>{group.title}</Text>
-              {group.options.map((option) => {
-                const selected = (customisations[group.id] ?? []).includes(
-                  option.id,
-                );
-                return (
-                  <Pressable
-                    key={option.id}
-                    style={styles.optionRow}
-                    onPress={() => toggleOption(group, option.id)}
-                    accessibilityRole="checkbox"
-                    accessibilityState={{ checked: selected }}
-                    accessibilityLabel={option.label}
-                  >
-                    <MaterialIcons
-                      name={selected ? "check-box" : "check-box-outline-blank"}
-                      size={CHECKBOX_SIZE}
-                      color={selected ? Colors.primary : Colors.gray4}
-                    />
-                    <Text style={styles.optionLabel}>{option.label}</Text>
-                    {(option.extraPrice ?? 0) > 0 && (
-                      <Text style={styles.optionPrice}>
-                        + Rs {option.extraPrice}
-                      </Text>
-                    )}
-                  </Pressable>
-                );
-              })}
+              {group.options.map((option) => (
+                <CheckboxOption
+                  key={option.id}
+                  label={option.label}
+                  checked={(customisations[group.id] ?? []).includes(option.id)}
+                  onPress={() => toggleOption(group.id, option.id)}
+                  extraPrice={option.extraPrice}
+                />
+              ))}
             </View>
             <View style={styles.divider} />
           </View>
@@ -417,21 +397,6 @@ const styles = StyleSheet.create({
   bodyText: {
     fontSize: FontSizes.sm,
     color: Colors.gray1,
-  },
-  optionRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-    minHeight: 44,
-  },
-  optionLabel: {
-    flex: 1,
-    fontSize: FontSizes.sm,
-    color: Colors.gray1,
-  },
-  optionPrice: {
-    fontSize: FontSizes.sm,
-    color: Colors.gray2,
   },
   restaurantInfoRow: {
     flexDirection: "row",
