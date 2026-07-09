@@ -42,7 +42,7 @@ interface AddonTileProps {
 
 const AddonTile = ({ addon, onAdd, isAdded }: AddonTileProps) => (
   <View style={styles.addonTile}>
-    <View>
+    <View style={styles.addonImageContainer}>
       <Image
         source={{ uri: addon.image }}
         style={styles.addonImage}
@@ -501,11 +501,22 @@ const styles = StyleSheet.create({
     borderColor: Colors.gray5,
     borderRadius: 8,
     backgroundColor: Colors.white,
-    overflow: "hidden",
+  },
+  addonImageContainer: {
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    shadowColor: Colors.black1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.18,
+    shadowRadius: 5,
+    elevation: 3,
   },
   addonImage: {
     width: ADDON_SIZE,
     height: ADDON_SIZE,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
     backgroundColor: Colors.gray5,
   },
   addonAddBtn: {
