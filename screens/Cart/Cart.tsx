@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialIcons from "@react-native-vector-icons/material-icons";
-import { useCallback, useMemo } from "react";
+import { Fragment, useCallback, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   FlatList,
@@ -251,7 +251,7 @@ const Cart = () => {
         map.set(item.restaurantId, {
           restaurantId: item.restaurantId,
           restaurantName: item.restaurantName,
-          restaurantLogo: item.restaurantLogo,
+          restaurantLogo: item.restaurantLogo as string,
           items: [],
           total: 0,
         });
@@ -293,8 +293,13 @@ const Cart = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {restaurantGroups.map((group) => (
-          <RestaurantGroupCard key={group.restaurantId} group={group} />
+        {restaurantGroups.map((group, index) => (
+          <Fragment key={group.restaurantId}>
+            <RestaurantGroupCard group={group} />
+            {index < restaurantGroups.length - 1 && (
+              <View style={styles.restaurantSeparator} />
+            )}
+          </Fragment>
         ))}
 
         {/* Voucher */}
@@ -492,12 +497,15 @@ const styles = StyleSheet.create({
   },
   addonTile: {
     width: ADDON_SIZE,
-    marginRight: Spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.gray5,
+    borderRadius: 8,
+    backgroundColor: Colors.white,
+    overflow: "hidden",
   },
   addonImage: {
     width: ADDON_SIZE,
     height: ADDON_SIZE,
-    borderRadius: 8,
     backgroundColor: Colors.gray5,
   },
   addonAddBtn: {
@@ -513,12 +521,16 @@ const styles = StyleSheet.create({
   },
   addonName: {
     fontSize: FontSizes.xs,
-    color: Colors.gray1,
-    marginTop: Spacing.xs,
+    color: Colors.black2,
+    textAlign: "center",
+    paddingHorizontal: Spacing.xs,
+    paddingTop: Spacing.sm,
   },
   addonPrice: {
     fontSize: FontSizes.xs,
-    color: Colors.gray1,
+    color: Colors.gray2,
+    textAlign: "center",
+    paddingBottom: Spacing.sm,
   },
 
   // Special instructions
@@ -527,11 +539,19 @@ const styles = StyleSheet.create({
     marginTop: Spacing.md,
     fontSize: FontSizes.xs,
     color: Colors.gray1,
-    borderRadius: 11,
+    borderRadius: 6,
     borderWidth: 1,
     borderColor: Colors.primaryLight,
     paddingVertical: Spacing.sm,
     minHeight: 44,
+  },
+
+  // Restaurant separator
+  restaurantSeparator: {
+    height: 2,
+    backgroundColor: Colors.primaryLight,
+    width: "80%",
+    margin: "auto",
   },
 
   // Voucher
