@@ -120,10 +120,16 @@ export interface MenuCategory {
   dishes: MenuDish[];
 }
 
+export interface OpeningHoursEntry {
+  day: string;
+  hours: string;
+}
+
 export interface RestaurantDetail {
   id: string;
   name: string;
   address: string;
+  city?: string;
   image: string;
   status: "open" | "closed";
   deliveryMinMinutes: number;
@@ -132,6 +138,10 @@ export interface RestaurantDetail {
   minimumOrder: number;
   distanceKm: number;
   openingNote: string;
+  openingHours?: OpeningHoursEntry[];
+  paymentMethods?: string;
+  contactPhone?: string;
+  contactEmail?: string;
   promotions: Promotion[];
   menu: MenuCategory[];
   isFavourite: boolean;

@@ -1,6 +1,6 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Image,
   Pressable,
@@ -16,6 +16,7 @@ import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import AppHeader from "common/AppHeader";
 import { useRestaurantDetail } from "hooks/useRestaurantDetail";
 import { hp, wp } from "utils/dimensions";
+import RestaurantDetailSheet from "./RestaurantDetailSheet";
 
 const HERO_HEIGHT = hp(28);
 const ICON_MED = wp(4.5);
@@ -34,32 +35,34 @@ const RestaurantDetail = () => {
     restaurantId ?? "",
   );
 
-  const [isFavourited, setIsFavourited] = useState(false);
+  const [restaurantFavOverride, setRestaurantFavOverride] = useState<
+    boolean | null
+  >(null);
   const [dishFavourites, setDishFavourites] = useState<Record<string, boolean>>(
     {},
   );
+  const [showDetailSheet, setShowDetailSheet] = useState(false);
 
-  useEffect(() => {
-    if (!restaurant) return;
-    setIsFavourited(restaurant.isFavourite);
-    const initial: Record<string, boolean> = {};
-    restaurant.menu.forEach((cat) =>
-      cat.dishes.forEach((dish) => {
-        initial[dish.id] = dish.isFavourite;
-      }),
-    );
-    setDishFavourites(initial);
-  }, [restaurant]);
+  const isFavourited =
+    restaurantFavOverride ?? restaurant?.isFavourite ?? false;
 
   const toggleFavourite = useCallback(() => {
     // TODO: Replace with API call + optimistic update when backend is ready
-    setIsFavourited((prev) => !prev);
-  }, []);
+    setRestaurantFavOverride(
+      (prev) => !(prev ?? restaurant?.isFavourite ?? false),
+    );
+  }, [restaurant]);
 
-  const toggleDishFavourite = useCallback((dishId: string) => {
-    // TODO: Replace with API call + optimistic update when backend is ready
-    setDishFavourites((prev) => ({ ...prev, [dishId]: !prev[dishId] }));
-  }, []);
+  const toggleDishFavourite = useCallback(
+    (dishId: string, defaultFav: boolean) => {
+      // TODO: Replace with API call + optimistic update when backend is ready
+      setDishFavourites((prev) => ({
+        ...prev,
+        [dishId]: dishId in prev ? !prev[dishId] : !defaultFav,
+      }));
+    },
+    [],
+  );
 
   const handleShare = useCallback(async () => {
     if (!restaurant) return;
@@ -231,23 +234,25 @@ const RestaurantDetail = () => {
                     />
                     <Pressable
                       style={styles.dishHeartButton}
-                      onPress={() => toggleDishFavourite(dish.id)}
+                      onPress={() =>
+                        toggleDishFavourite(dish.id, dish.isFavourite)
+                      }
                       accessibilityRole="button"
                       accessibilityLabel={
-                        dishFavourites[dish.id]
+                        (dishFavourites[dish.id] ?? dish.isFavourite)
                           ? `Remove ${dish.name} from favourites`
                           : `Add ${dish.name} to favourites`
                       }
                     >
                       <MaterialIcons
                         name={
-                          dishFavourites[dish.id]
+                          (dishFavourites[dish.id] ?? dish.isFavourite)
                             ? "favorite"
                             : "favorite-border"
                         }
                         size={ICON_HEART}
                         color={
-                          dishFavourites[dish.id]
+                          (dishFavourites[dish.id] ?? dish.isFavourite)
                             ? Colors.primary
                             : Colors.white
                         }
@@ -284,7 +289,7 @@ const RestaurantDetail = () => {
           <View style={styles.footerRow}>
             <Text style={styles.openingNote}>{restaurant.openingNote}</Text>
             <Pressable
-              onPress={() => {}}
+              onPress={() => setShowDetailSheet(true)}
               accessibilityRole="link"
               accessibilityLabel="Show restaurant details"
             >
@@ -310,6 +315,12 @@ const RestaurantDetail = () => {
           <Text style={styles.reservationButtonText}>Make reservation</Text>
         </Pressable>
       </View>
+
+      <RestaurantDetailSheet
+        restaurant={restaurant}
+        visible={showDetailSheet}
+        onClose={() => setShowDetailSheet(false)}
+      />
     </View>
   );
 };

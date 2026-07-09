@@ -456,7 +456,8 @@ const MOCK_RESTAURANT_MENU: MenuCategory[] = [
 const MOCK_RESTAURANT_DETAIL: RestaurantDetail = {
   id: "r1",
   name: "McDonald Espoo",
-  address: "Kauniasitentie",
+  address: "Kuunkehrä 4",
+  city: "02210 Espoo",
   image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800",
   status: "closed",
   deliveryMinMinutes: 25,
@@ -465,6 +466,18 @@ const MOCK_RESTAURANT_DETAIL: RestaurantDetail = {
   minimumOrder: 600,
   distanceKm: 5,
   openingNote: "Open tomorrow at 9 AM",
+  openingHours: [
+    { day: "Monday", hours: "10:00-02:00" },
+    { day: "Tuesday", hours: "10:00-02:00" },
+    { day: "Wednesday", hours: "10:00-02:00" },
+    { day: "Thursday", hours: "10:00-02:00" },
+    { day: "Friday", hours: "10:00-02:00" },
+    { day: "Saturday", hours: "10:00-02:00" },
+    { day: "Sunday", hours: "10:00-02:00" },
+  ],
+  paymentMethods: "Credit card, Online bank, Epassi",
+  contactPhone: "+358451133587",
+  contactEmail: "restaurantemail.gmail.com",
   promotions: [
     { id: "p1", label: "Rs 50 off" },
     { id: "p2", label: "Rs 50 off" },
