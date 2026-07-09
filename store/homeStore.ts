@@ -1,6 +1,12 @@
 import { create } from "zustand";
 
-import { DeliveryMode } from "types/home";
+import { DeliveryMode, DishDetail } from "types/home";
+
+interface AddToCartParams {
+  dish: DishDetail;
+  customisations: Record<string, string[]>;
+  quantity: number;
+}
 
 interface HomeStore {
   deliveryMode: DeliveryMode;
@@ -8,6 +14,7 @@ interface HomeStore {
   location: string;
   setDeliveryMode: (mode: DeliveryMode) => void;
   incrementCart: () => void;
+  addToCart: (params: AddToCartParams) => void;
 }
 
 export const useHomeStore = create<HomeStore>((set) => ({
@@ -16,4 +23,6 @@ export const useHomeStore = create<HomeStore>((set) => ({
   location: "Nuijavuori 2", // TODO: This will come from actual loction
   setDeliveryMode: (mode) => set({ deliveryMode: mode }),
   incrementCart: () => set((state) => ({ cartCount: state.cartCount + 1 })),
+  addToCart: ({ quantity }) =>
+    set((state) => ({ cartCount: state.cartCount + quantity })),
 }));

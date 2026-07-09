@@ -61,13 +61,18 @@ const DishSearch = () => {
     ({ item }: { item: Dish }) => (
       <DishCard
         item={item}
-        onPress={() => {}}
+        onPress={(dish) =>
+          router.push({
+            pathname: "/(tabs)/dishDetail",
+            params: { dishId: dish.id },
+          })
+        }
         isFavourited={favouriteIds.has(item.id)}
         onFavouritePress={toggleFavourite}
         style={searchResultCardStyle}
       />
     ),
-    [favouriteIds, toggleFavourite],
+    [favouriteIds, toggleFavourite, router],
   );
 
   const renderFooter = useCallback(

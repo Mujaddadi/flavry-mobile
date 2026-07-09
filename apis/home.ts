@@ -1,6 +1,8 @@
 import {
   Category,
+  CustomisationGroup,
   Dish,
+  DishDetail,
   DishSearchParams,
   DishSearchResult,
   PromoBanner,
@@ -224,6 +226,56 @@ const MOCK_SEARCH_RESTAURANTS: Restaurant[] = [
     deliveryTime: "35-45 min",
   },
 ];
+
+const MOCK_DISH_DETAIL_CUSTOMISATIONS: CustomisationGroup[] = [
+  {
+    id: "drinks",
+    title: "Select drink",
+    maxSelections: 1,
+    options: [
+      { id: "fanta", label: "Fanta 0.5 L", isDefault: true },
+      { id: "pepsi-zero", label: "Pepsi Zero 0.5 L" },
+      { id: "dew", label: "Dew 0.5 L" },
+      { id: "coca-cola", label: "Coca-cola 1L" },
+      { id: "coffee", label: "Coffee" },
+      { id: "pina-colada", label: "Pina Colada", extraPrice: 50 },
+    ],
+  },
+  {
+    id: "fries",
+    title: "Select fries",
+    maxSelections: 1,
+    options: [
+      { id: "large-fries", label: "Large fries" },
+      { id: "medium-fries", label: "Medium fries", isDefault: true },
+    ],
+  },
+];
+
+const MOCK_DISH_DETAIL: DishDetail = {
+  id: "s2",
+  name: "Beef Burger Meal",
+  restaurantId: "r3",
+  restaurantName: "Road House Espoo",
+  price: 250,
+  image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800",
+  openUntil: "20:30",
+  openTomorrow: "9 AM",
+  deliveryMin: 25,
+  deliveryMax: 35,
+  distanceKm: 5,
+  minimumOrder: 600,
+  ingredients: "Beef, tomatoes, onions, cheese",
+  customisationGroups: MOCK_DISH_DETAIL_CUSTOMISATIONS,
+  isFavourited: false,
+};
+
+// TODO: Replace with real API call when backend is ready.
+export const fetchDishDetail = async (dishId: string): Promise<DishDetail> => {
+  // Return the matching mock or fall back to the default mock.
+  if (dishId === MOCK_DISH_DETAIL.id || !dishId) return MOCK_DISH_DETAIL;
+  return { ...MOCK_DISH_DETAIL, id: dishId };
+};
 
 // TODO: Replace with real API call when backend is ready.
 export const fetchRestaurantSearch = async ({

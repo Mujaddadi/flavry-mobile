@@ -64,3 +64,35 @@ export interface DishSearchResult {
   page: number;
   hasMore: boolean;
 }
+
+export interface CustomisationOption {
+  id: string;
+  label: string;
+  extraPrice?: number;
+  isDefault?: boolean;
+}
+
+export interface CustomisationGroup {
+  id: string;
+  title: string;
+  maxSelections: number;
+  options: CustomisationOption[];
+}
+
+export interface DishDetail {
+  id: string;
+  name: string;
+  restaurantId: string;
+  restaurantName: string;
+  price: number;
+  image: string;
+  openUntil?: string;
+  openTomorrow?: string;
+  deliveryMin: number;
+  deliveryMax: number;
+  distanceKm: number;
+  minimumOrder: number;
+  ingredients: string;
+  customisationGroups: CustomisationGroup[];
+  isFavourited?: boolean;
+}
