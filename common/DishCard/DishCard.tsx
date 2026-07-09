@@ -10,6 +10,7 @@ import {
   ViewStyle,
 } from "react-native";
 
+import AddToCartButton from "common/AddToCartButton";
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { useCartStore } from "store/cartStore";
 import { useHomeStore } from "store/homeStore";
@@ -120,14 +121,10 @@ const DishCard = ({
             {item.restaurantName}
           </Text>
           <View style={styles.footer}>
-            <Pressable
-              style={styles.addButton}
+            <AddToCartButton
               onPress={handleAddToCart}
-              accessibilityRole="button"
               accessibilityLabel={`Add ${item.name} to cart`}
-            >
-              <Text style={styles.addButtonText}>Add to cart</Text>
-            </Pressable>
+            />
             <View style={styles.deliveryRow}>
               <MaterialIcons
                 name="delivery-dining"
@@ -244,17 +241,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: Spacing.xs,
-  },
-  addButton: {
-    backgroundColor: Colors.primary,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.xs + 2,
-    borderRadius: 20,
-  },
-  addButtonText: {
-    color: Colors.white,
-    fontSize: FontSizes.xs,
-    fontWeight: "600",
   },
   deliveryRow: {
     flexDirection: "row",
