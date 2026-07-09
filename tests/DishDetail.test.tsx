@@ -6,7 +6,6 @@ import {
   waitFor,
 } from "@testing-library/react-native";
 import React from "react";
-import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 
 import DishDetail from "screens/DishDetail";
 import { DishDetail as DishDetailType } from "types/home";
