@@ -59,6 +59,7 @@ const RestaurantDetailSheet = ({ restaurant, visible, onClose }: Props) => {
       transparent
       animationType="slide"
       onRequestClose={onClose}
+      statusBarTranslucent
     >
       <View style={styles.container}>
         <Pressable
