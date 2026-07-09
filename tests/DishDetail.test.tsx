@@ -6,6 +6,7 @@ import {
   waitFor,
 } from "@testing-library/react-native";
 import React from "react";
+import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 
 import DishDetail from "screens/DishDetail";
 import { DishDetail as DishDetailType } from "types/home";
@@ -161,10 +162,10 @@ describe("DishDetail", () => {
     );
   });
 
-  it("radio group deselects previous when a new option is selected", async () => {
+  it("allows multiple options to be selected in a group", async () => {
     renderScreen();
     await waitFor(() => expect(screen.getByText("Fanta 0.5 L")).toBeTruthy());
-    // Fanta is the default (checked). Pressing Pepsi should select it instead.
+    // Fanta is default-checked. Pressing Pepsi should also become checked.
     fireEvent.press(screen.getByLabelText("Pepsi Zero 0.5 L"));
     await waitFor(() =>
       expect(
@@ -172,10 +173,10 @@ describe("DishDetail", () => {
           ?.checked,
       ).toBe(true),
     );
-    // Fanta should no longer be checked
+    // Fanta should remain checked
     expect(
       screen.getByLabelText("Fanta 0.5 L").props.accessibilityState?.checked,
-    ).toBe(false);
+    ).toBe(true);
   });
 
   it("toggles favourite icon on heart press", async () => {
