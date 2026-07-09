@@ -54,7 +54,7 @@ const DishCard = ({
       quantity: 1,
       restaurantId: item.restaurantId,
       restaurantName: item.restaurantName,
-      restaurantLogo: "",
+      restaurantLogo: item.restaurantLogo ?? "",
     });
     incrementCart();
   }, [item, incrementCart]);

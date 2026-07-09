@@ -8,7 +8,7 @@ export interface CartItem {
   quantity: number;
   restaurantId: string;
   restaurantName: string;
-  restaurantLogo: string;
+  restaurantLogo: string | number;
   customisations?: Record<string, string[]>;
 }
 

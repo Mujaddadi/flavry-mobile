@@ -171,7 +171,11 @@ const RestaurantGroupCard = ({ group }: RestaurantGroupCardProps) => {
       <View style={styles.groupHeader}>
         {group.restaurantLogo ? (
           <Image
-            source={{ uri: group.restaurantLogo }}
+            source={
+              typeof group.restaurantLogo === "number"
+                ? group.restaurantLogo
+                : { uri: group.restaurantLogo }
+            }
             style={styles.restaurantLogo}
             accessibilityLabel={group.restaurantName}
           />

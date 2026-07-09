@@ -66,6 +66,8 @@ export const fetchFavouriteDishes = async (): Promise<Dish[]> => [
     name: "Zinger Burger",
     restaurantId: "r1",
     restaurantName: "Burger King Espoo",
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    restaurantLogo: require("../assets/images/Burger_King_2020.svg.webp"),
     price: 420,
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
     discount: "Rs 50 off",
@@ -76,6 +78,8 @@ export const fetchFavouriteDishes = async (): Promise<Dish[]> => [
     name: "Margherita Pizza",
     restaurantId: "r2",
     restaurantName: "Pizza Palace",
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    restaurantLogo: require("../assets/images/pizza palace.jpg"),
     price: 350,
     image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
     deliveryTime: "25-30 min",
@@ -85,6 +89,8 @@ export const fetchFavouriteDishes = async (): Promise<Dish[]> => [
     name: "Salmon Sushi",
     restaurantId: "r3",
     restaurantName: "Sushi Hub",
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    restaurantLogo: require("../assets/images/sushi hub.jpeg"),
     price: 580,
     image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400",
     discount: "Rs 30 off",
@@ -134,6 +140,8 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     name: "Zinger Burger",
     restaurantId: "r1",
     restaurantName: "Burger King Espoo",
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    restaurantLogo: require("../assets/images/Burger_King_2020.svg.webp"),
     price: 420,
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
     discount: "Rs 50 off",
@@ -144,6 +152,8 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     name: "Beef Burger",
     restaurantId: "r3",
     restaurantName: "Road House Espoo",
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    restaurantLogo: require("../assets/images/road house logo.jpeg"),
     price: 500,
     image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=400",
     deliveryTime: "20-25 min",
@@ -153,6 +163,8 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     name: "Zinger Burger",
     restaurantId: "r4",
     restaurantName: "Bites Burger Espoo",
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    restaurantLogo: require("../assets/images/bites burger.jpeg"),
     price: 620,
     image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
     deliveryTime: "20-25 min",
@@ -162,6 +174,8 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     name: "Burger Meal",
     restaurantId: "r5",
     restaurantName: "Burger Shop Espoo",
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    restaurantLogo: require("../assets/images/Burger shop espoo logo.webp"),
     price: 1020,
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400",
     discount: "Deal",
@@ -172,6 +186,8 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     name: "Chicken Burger",
     restaurantId: "r6",
     restaurantName: "Crispy House Espoo",
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    restaurantLogo: require("../assets/images/Crispy house logo.jpeg"),
     price: 380,
     image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400",
     deliveryTime: "15-20 min",
@@ -181,6 +197,8 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     name: "Double Smash Burger",
     restaurantId: "r7",
     restaurantName: "Smash Bros Espoo",
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    restaurantLogo: require("../assets/images/smash-bros-logo.png"),
     price: 750,
     image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400",
     discount: "Rs 80 off",
@@ -267,6 +285,8 @@ const MOCK_DISH_DETAIL: DishDetail = {
   name: "Beef Burger Meal",
   restaurantId: "r3",
   restaurantName: "Road House Espoo",
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  restaurantLogo: require("../assets/images/road house logo.jpeg"),
   price: 250,
   image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800",
   openUntil: "20:30",

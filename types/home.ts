@@ -22,6 +22,7 @@ export interface Dish {
   name: string;
   restaurantId: string;
   restaurantName: string;
+  restaurantLogo?: string | number;
   price: number;
   image: string;
   discount?: string;
@@ -85,6 +86,7 @@ export interface DishDetail {
   name: string;
   restaurantId: string;
   restaurantName: string;
+  restaurantLogo?: string | number;
   price: number;
   image: string;
   openUntil?: string;

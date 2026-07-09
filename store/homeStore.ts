@@ -35,7 +35,7 @@ export const useHomeStore = create<HomeStore>((set) => ({
       quantity,
       restaurantId: dish.restaurantId,
       restaurantName: dish.restaurantName,
-      restaurantLogo: "",
+      restaurantLogo: dish.restaurantLogo ?? "",
       customisations,
     });
     set((state) => ({ cartCount: state.cartCount + quantity }));
