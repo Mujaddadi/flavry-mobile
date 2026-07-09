@@ -64,7 +64,12 @@ const RestaurantSearch = () => {
     ({ item }: { item: Restaurant }) => (
       <RestaurantCard
         item={item}
-        onPress={() => {}}
+        onPress={(r) =>
+          router.push({
+            pathname: "/(tabs)/restaurantDetail",
+            params: { restaurantId: r.id },
+          })
+        }
         isFavourited={favouriteIds.has(item.id)}
         onFavouritePress={toggleFavourite}
         style={searchResultCardStyle}

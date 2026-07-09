@@ -5,8 +5,10 @@ import {
   DishDetail,
   DishSearchParams,
   DishSearchResult,
+  MenuCategory,
   PromoBanner,
   Restaurant,
+  RestaurantDetail,
   RestaurantSearchParams,
   RestaurantSearchResult,
 } from "types/home";
@@ -371,4 +373,111 @@ export const fetchDishSearch = async ({
     page,
     hasMore: start + PAGE_SIZE < MOCK_SEARCH_DISHES.length,
   };
+};
+
+const MOCK_RESTAURANT_MENU: MenuCategory[] = [
+  {
+    id: "burgers",
+    name: "Burgers",
+    dishes: [
+      {
+        id: "m1",
+        name: "Big Mac",
+        price: 850,
+        description: "Big Mac Plus meal and Double",
+        image:
+          "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200",
+        isFavourite: false,
+      },
+      {
+        id: "m2",
+        name: "Chicken Burger",
+        price: 650,
+        description: "Beef, tomatoes, onions",
+        image:
+          "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=200",
+        isFavourite: false,
+      },
+      {
+        id: "m3",
+        name: "Jalapeno Lime Chicken Meal",
+        price: 1450,
+        description: "Chicken, tomatoes, onions",
+        image:
+          "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=200",
+        isFavourite: false,
+      },
+      {
+        id: "m4",
+        name: "Beef Burger Meal",
+        price: 1450,
+        description: "Beef, tomatoes, onions",
+        image:
+          "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=200",
+        isFavourite: false,
+      },
+    ],
+  },
+  {
+    id: "garnish",
+    name: "Garnish",
+    dishes: [
+      {
+        id: "m5",
+        name: "Chicken Nuggets (6pc)",
+        price: 150,
+        description: "cheese, chicken",
+        image:
+          "https://images.unsplash.com/photo-1562802378-063ec186a863?w=200",
+        isFavourite: false,
+      },
+      {
+        id: "m6",
+        name: "French Fries",
+        price: 450,
+        description: "Potato, salt",
+        image:
+          "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=200",
+        isFavourite: false,
+      },
+      {
+        id: "m7",
+        name: "Chilli Cheese",
+        price: 450,
+        description: "Cheese",
+        image:
+          "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200",
+        isFavourite: false,
+      },
+    ],
+  },
+];
+
+const MOCK_RESTAURANT_DETAIL: RestaurantDetail = {
+  id: "r1",
+  name: "McDonald Espoo",
+  address: "Kauniasitentie",
+  image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800",
+  status: "closed",
+  deliveryMinMinutes: 25,
+  deliveryMaxMinutes: 35,
+  deliveryFee: 150,
+  minimumOrder: 600,
+  distanceKm: 5,
+  openingNote: "Open tomorrow at 9 AM",
+  promotions: [
+    { id: "p1", label: "Rs 50 off" },
+    { id: "p2", label: "Rs 50 off" },
+  ],
+  menu: MOCK_RESTAURANT_MENU,
+  isFavourite: false,
+};
+
+// TODO: Replace with real API call when backend is ready.
+export const fetchRestaurantDetail = async (
+  restaurantId: string,
+): Promise<RestaurantDetail> => {
+  if (restaurantId === MOCK_RESTAURANT_DETAIL.id || !restaurantId)
+    return MOCK_RESTAURANT_DETAIL;
+  return { ...MOCK_RESTAURANT_DETAIL, id: restaurantId };
 };

@@ -1,7 +1,6 @@
 # Restaurant Detail Spec
 
 Flavry is a food discovery and delivery app for UK audiences.
-Figma reference: https://www.figma.com/design/ty7JcXnIk2GWdi5Nv6NlC7/UIs?node-id=0-1
 
 ## Goal
 

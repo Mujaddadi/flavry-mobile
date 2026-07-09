@@ -60,8 +60,8 @@ const Home = () => {
 
   const handleRestaurantSelect = (restaurant: Restaurant) => {
     router.push({
-      pathname: "/(tabs)/restaurantSearch",
-      params: { id: restaurant.id },
+      pathname: "/(tabs)/restaurantDetail",
+      params: { restaurantId: restaurant.id },
     });
   };
 

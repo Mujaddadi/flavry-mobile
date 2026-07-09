@@ -61,6 +61,13 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
+        name="restaurantDetail"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
         name="cart"
         options={{
           title: "Cart",

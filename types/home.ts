@@ -99,3 +99,40 @@ export interface DishDetail {
   customisationGroups: CustomisationGroup[];
   isFavourited?: boolean;
 }
+
+export interface Promotion {
+  id: string;
+  label: string;
+}
+
+export interface MenuDish {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+  isFavourite: boolean;
+}
+
+export interface MenuCategory {
+  id: string;
+  name: string;
+  dishes: MenuDish[];
+}
+
+export interface RestaurantDetail {
+  id: string;
+  name: string;
+  address: string;
+  image: string;
+  status: "open" | "closed";
+  deliveryMinMinutes: number;
+  deliveryMaxMinutes: number;
+  deliveryFee: number;
+  minimumOrder: number;
+  distanceKm: number;
+  openingNote: string;
+  promotions: Promotion[];
+  menu: MenuCategory[];
+  isFavourite: boolean;
+}
