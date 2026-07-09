@@ -54,6 +54,16 @@ Allow users to discover dishes and restaurants, search for food, browse categori
 - Prettier formats the file automatically — don't run it manually after edits
 - ESLint runs automatically on .ts/.tsx/.js/.jsx — check output before proceeding
 
+## Accessibility
+
+- Text should scale dynamically according to the user's device settings for accessibility
+- Use Eslint and Prettier for code formatting
+- The types should be inside the types folder
+
+## Security Requirements (OWASP Top 10)
+- 
+- Follow OWASP Top 10 where applicable
+
 ## Workflow
 
 - Write a spec in specs/ before implementing a new feature
