@@ -1,11 +1,3 @@
-import { Text, View } from "react-native";
+import TableReservationSearch from "screens/TableReservationSearch";
 
-const Reservations = () => {
-  return (
-    <View>
-      <Text>Reservations</Text>
-    </View>
-  );
-};
-
-export default Reservations;
+export default TableReservationSearch;

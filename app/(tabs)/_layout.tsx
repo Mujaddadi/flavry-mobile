@@ -80,10 +80,17 @@ export default function Layout() {
         name="reservations"
         options={{
           title: "Reservation",
-          headerTitle: () => <AppHeader title="Reservations" />,
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="calendar-month" size={24} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="reserveTable"
+        options={{
+          href: null,
+          headerShown: false,
         }}
       />
       <Tabs.Screen
