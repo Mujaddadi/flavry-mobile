@@ -457,7 +457,7 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.sm,
     color: Colors.black1,
     paddingHorizontal: Spacing.reg,
-    paddingVertical: Spacing.xs,
+    paddingVertical: Spacing.lg,
   },
   // Filter bar
   horizontalControls: {
@@ -467,7 +467,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: Spacing.reg,
-    paddingBottom: Spacing.xs,
+    paddingBottom: Spacing.lg,
     gap: Spacing.sm,
   },
   filterChip: {
@@ -497,7 +497,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: Spacing.reg,
-    paddingBottom: Spacing.xs,
+    paddingBottom: Spacing.lg,
     gap: Spacing.sm,
   },
   dateChip: {
