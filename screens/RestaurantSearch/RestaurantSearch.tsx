@@ -67,9 +67,11 @@ const RestaurantSearch = () => {
     // TODO: Replace with API call + optimistic update when backend is ready
     setFavouriteIds((prev) => {
       const next = new Set(prev);
-      next.has(restaurant.id)
-        ? next.delete(restaurant.id)
-        : next.add(restaurant.id);
+      if (next.has(restaurant.id)) {
+        next.delete(restaurant.id);
+      } else {
+        next.add(restaurant.id);
+      }
       return next;
     });
   }, []);
@@ -89,7 +91,7 @@ const RestaurantSearch = () => {
         style={searchResultCardStyle}
       />
     ),
-    [favouriteIds, toggleFavourite],
+    [favouriteIds, toggleFavourite, router],
   );
 
   const renderFooter = useCallback(
@@ -104,7 +106,7 @@ const RestaurantSearch = () => {
     () => (
       <View style={styles.emptyState}>
         <Text style={styles.emptyText}>
-          No results found for "{searchTerm}"
+          {`No results found for "${searchTerm}"`}
         </Text>
         <Text style={styles.emptyHint}>Try a different search term</Text>
       </View>
@@ -161,6 +163,7 @@ const RestaurantSearch = () => {
         />
       )}
       <SearchFiltersSheet
+        key={String(filtersVisible)}
         visible={filtersVisible}
         context="restaurant"
         value={searchFilters}

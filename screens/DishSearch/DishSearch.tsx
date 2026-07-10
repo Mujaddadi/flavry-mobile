@@ -61,7 +61,11 @@ const DishSearch = () => {
     // TODO: Replace with API call + optimistic update when backend is ready
     setFavouriteIds((prev) => {
       const next = new Set(prev);
-      next.has(dish.id) ? next.delete(dish.id) : next.add(dish.id);
+      if (next.has(dish.id)) {
+        next.delete(dish.id);
+      } else {
+        next.add(dish.id);
+      }
       return next;
     });
   }, []);
@@ -96,7 +100,7 @@ const DishSearch = () => {
     () => (
       <View style={styles.emptyState}>
         <Text style={styles.emptyText}>
-          No results found for "{searchTerm}"
+          {`No results found for "${searchTerm}"`}
         </Text>
         <Text style={styles.emptyHint}>Try a different search term</Text>
       </View>
@@ -150,6 +154,7 @@ const DishSearch = () => {
         />
       )}
       <SearchFiltersSheet
+        key={String(filtersVisible)}
         visible={filtersVisible}
         context="dish"
         value={searchFilters}

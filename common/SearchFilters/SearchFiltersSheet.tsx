@@ -1,5 +1,5 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Animated,
   Modal,
@@ -19,7 +19,7 @@ import {
   SearchServiceFilter,
   SearchSortOption,
 } from "types/searchFilters";
-import { hp, wp } from "utils/dimensions";
+import { hp } from "utils/dimensions";
 
 const ORANGE = Colors.primary;
 const SOFT_ORANGE = "#FFF2EC";
@@ -106,7 +106,7 @@ const FilterOption = <T extends string>({
   selected: boolean;
   onPress: () => void;
 }) => {
-  const scale = useRef(new Animated.Value(1)).current;
+  const [scale] = useState(() => new Animated.Value(1));
 
   const animateTo = (toValue: number) => {
     if (IS_TEST) {
@@ -253,7 +253,7 @@ const Section = ({
   onToggle: () => void;
   children: React.ReactNode;
 }) => {
-  const progress = useRef(new Animated.Value(open ? 1 : 0)).current;
+  const [progress] = useState(() => new Animated.Value(open ? 1 : 0));
 
   useEffect(() => {
     Animated.timing(progress, {
@@ -283,7 +283,11 @@ const Section = ({
           <Text style={styles.sectionTitle}>{title}</Text>
         </View>
         <Animated.View style={{ transform: [{ rotate }] }}>
-          <MaterialIcons name="keyboard-arrow-down" size={22} color={Colors.black1} />
+          <MaterialIcons
+            name="keyboard-arrow-down"
+            size={22}
+            color={Colors.black1}
+          />
         </Animated.View>
       </Pressable>
       {open && <View style={styles.optionGrid}>{children}</View>}
@@ -309,19 +313,12 @@ const SearchFiltersSheet = ({
       cuisines: true,
     },
   );
-  const backdropOpacity = useRef(new Animated.Value(0)).current;
-  const sheetOpacity = useRef(new Animated.Value(0)).current;
-  const applyScale = useRef(new Animated.Value(1)).current;
+  const [backdropOpacity] = useState(() => new Animated.Value(0));
+  const [sheetOpacity] = useState(() => new Animated.Value(0));
+  const [applyScale] = useState(() => new Animated.Value(1));
 
   useEffect(() => {
     if (!visible) return;
-    setDraft(value);
-    setOpenSections({
-      sort: initialSection === "sort",
-      environments: initialSection === "all",
-      services: true,
-      cuisines: true,
-    });
     if (IS_TEST) {
       backdropOpacity.setValue(1);
       sheetOpacity.setValue(1);
@@ -339,7 +336,7 @@ const SearchFiltersSheet = ({
         useNativeDriver: true,
       }),
     ]).start();
-  }, [backdropOpacity, initialSection, sheetOpacity, value, visible]);
+  }, [backdropOpacity, sheetOpacity, visible]);
 
   const showEnvironments = context !== "dish";
   const showDistance = true;
