@@ -1,23 +1,18 @@
-import MaterialIcons, {
-  MaterialIconsIconName,
-} from "@react-native-vector-icons/material-icons";
+import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { useState } from "react";
 import {
-  KeyboardTypeOptions,
+  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
-
-const SOFT_ORANGE = "#FFF2EC";
-const ICON_CIRCLE_SIZE = 44;
+import FieldCard from "./components/FieldCard";
 
 // TODO: Replace with real auth store data when auth is implemented
 const MOCK_USER = {
@@ -25,65 +20,6 @@ const MOCK_USER = {
   email: "tahahassan82@gmail.com",
   address: "Nuijavuori 2 G 45, Espoo",
 };
-
-interface FieldCardProps {
-  label: string;
-  icon: MaterialIconsIconName;
-  displayValue: string;
-  draftValue: string;
-  isEditing: boolean;
-  onPressEdit: () => void;
-  onChangeDraft: (text: string) => void;
-  onSave: () => void;
-  keyboardType?: KeyboardTypeOptions;
-}
-
-const FieldCard = ({
-  label,
-  icon,
-  displayValue,
-  draftValue,
-  isEditing,
-  onPressEdit,
-  onChangeDraft,
-  onSave,
-  keyboardType = "default",
-}: FieldCardProps) => (
-  <View style={styles.card}>
-    <View style={styles.iconCircle}>
-      <MaterialIcons name={icon} size={20} color={Colors.primary} />
-    </View>
-    <View style={styles.fieldContent}>
-      <Text style={styles.fieldLabel}>{label}</Text>
-      {isEditing ? (
-        <TextInput
-          style={styles.fieldInput}
-          value={draftValue}
-          onChangeText={onChangeDraft}
-          autoFocus
-          keyboardType={keyboardType}
-          returnKeyType="done"
-          onSubmitEditing={onSave}
-          accessibilityLabel={`Edit ${label}`}
-        />
-      ) : (
-        <Text style={styles.fieldValue}>{displayValue}</Text>
-      )}
-    </View>
-    <Pressable
-      style={styles.actionButton}
-      onPress={isEditing ? onSave : onPressEdit}
-      accessibilityRole="button"
-      accessibilityLabel={isEditing ? `Save ${label}` : `Edit ${label}`}
-    >
-      <MaterialIcons
-        name={isEditing ? "check" : "edit"}
-        size={20}
-        color={Colors.primary}
-      />
-    </Pressable>
-  </View>
-);
 
 const ProfileDetail = () => {
   const insets = useSafeAreaInsets();
@@ -108,6 +44,23 @@ const ProfileDetail = () => {
     setEditingField(null);
   };
 
+  const handleDeleteProfile = () => {
+    Alert.alert(
+      "Delete Profile",
+      "Are you sure you want to permanently delete your account? This action cannot be undone.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            // TODO: call delete account API, clear auth store, navigate to login
+          },
+        },
+      ],
+    );
+  };
+
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
       {/* Header */}
@@ -116,7 +69,7 @@ const ProfileDetail = () => {
           style={styles.backButton}
           onPress={() => router.back()}
           accessibilityRole="button"
-          accessibilityLabel="Go back"
+          accessibilityLabel="Go back to profile"
         >
           <MaterialIcons name="arrow-back" size={24} color={Colors.white} />
         </Pressable>
@@ -184,6 +137,16 @@ const ProfileDetail = () => {
             onSave={() => {}}
           />
         </View>
+
+        <Pressable
+          style={styles.deleteButton}
+          onPress={handleDeleteProfile}
+          accessibilityRole="button"
+          accessibilityLabel="Delete profile"
+        >
+          <MaterialIcons name="delete" size={20} color={Colors.error} />
+          <Text style={styles.deleteText}>Delete Profile</Text>
+        </Pressable>
       </ScrollView>
     </View>
   );
@@ -226,49 +189,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.reg,
     gap: Spacing.md,
   },
-  card: {
-    backgroundColor: Colors.white,
-    borderRadius: 12,
-    paddingHorizontal: Spacing.reg,
-    paddingVertical: Spacing.lg,
+  deleteButton: {
     flexDirection: "row",
     alignItems: "center",
-    gap: Spacing.md,
-    elevation: 1,
-    shadowColor: Colors.black1,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-  },
-  iconCircle: {
-    width: ICON_CIRCLE_SIZE,
-    height: ICON_CIRCLE_SIZE,
-    borderRadius: ICON_CIRCLE_SIZE / 2,
-    backgroundColor: SOFT_ORANGE,
-    alignItems: "center",
     justifyContent: "center",
+    gap: Spacing.sm,
+    marginHorizontal: Spacing.reg,
+    marginTop: Spacing.xxxl,
+    paddingVertical: Spacing.reg,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.error,
   },
-  fieldContent: {
-    flex: 1,
-  },
-  fieldLabel: {
-    color: Colors.gray3,
-    fontSize: FontSizes.xs,
-    marginBottom: Spacing.xs,
-  },
-  fieldValue: {
-    color: Colors.black2,
+  deleteText: {
+    color: Colors.error,
     fontSize: FontSizes.md,
-  },
-  fieldInput: {
-    color: Colors.black2,
-    fontSize: FontSizes.md,
-    padding: 0,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.primary,
-  },
-  actionButton: {
-    padding: Spacing.xs,
+    fontWeight: "600",
   },
 });
 
