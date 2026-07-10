@@ -110,6 +110,19 @@ export default function Layout() {
           headerShown: false,
         }}
       />
+      {[
+        "faq",
+        "privacyPolicy",
+        "termsConditions",
+        "refundPolicy",
+        "contactUs",
+      ].map((name) => (
+        <Tabs.Screen
+          key={name}
+          name={name}
+          options={{ href: null, headerShown: false }}
+        />
+      ))}
     </Tabs>
   );
 }

@@ -24,6 +24,7 @@ const EDIT_BTN_SIZE = 24;
 interface MenuItem {
   label: string;
   icon: MaterialIconsIconName;
+  route?: string;
 }
 const USER = {
   name: "Taha Hassan Mujaddadi",
@@ -33,11 +34,11 @@ const USER = {
 const MENU_ITEMS: MenuItem[] = [
   { label: "Profile", icon: "account-circle" },
   { label: "Chat Now", icon: "chat" },
-  { label: "FAQ", icon: "help" },
-  { label: "Privacy Policy", icon: "security" },
-  { label: "Terms & Conditions", icon: "description" },
-  { label: "Refund Policy", icon: "currency-exchange" },
-  { label: "Contact Us", icon: "phone" },
+  { label: "FAQ", icon: "help", route: "/(tabs)/faq" },
+  { label: "Privacy Policy", icon: "security", route: "/(tabs)/privacyPolicy" },
+  { label: "Terms & Conditions", icon: "description", route: "/(tabs)/termsConditions" },
+  { label: "Refund Policy", icon: "currency-exchange", route: "/(tabs)/refundPolicy" },
+  { label: "Contact Us", icon: "phone", route: "/(tabs)/contactUs" },
   { label: "Logout", icon: "exit-to-app" },
 ];
 
@@ -59,15 +60,16 @@ const Profile = () => {
     ]);
   };
 
-  const handleMenuPress = (label: string) => {
-    if (label === "Logout") {
+  const handleMenuPress = (item: MenuItem) => {
+    if (item.label === "Logout") {
       handleLogout();
       return;
     }
-    if (label === "Profile") {
+    if (item.label === "Profile") {
       router.push("/(tabs)/profileDetail");
       return;
     }
+    if (item.route) router.push(item.route as never);
     // TODO: navigate to respective screens when implemented
   };
 
@@ -128,7 +130,7 @@ const Profile = () => {
             <View key={item.label}>
               <Pressable
                 style={styles.menuRow}
-                onPress={() => handleMenuPress(item.label)}
+                onPress={() => handleMenuPress(item)}
                 accessibilityRole="button"
                 accessibilityLabel={item.label}
               >
