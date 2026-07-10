@@ -17,13 +17,17 @@ import { wp } from "utils/dimensions";
 
 const SOFT_ORANGE = "#FFF2EC";
 const AVATAR_SIZE = wp(18);
-const AVATAR_ICON_SIZE = wp(14);
+const CARD_SHADOW = "rgba(0,0,0,0.14)";
 const EDIT_BTN_SIZE = 24;
 
 interface MenuItem {
   label: string;
   icon: MaterialIconsIconName;
 }
+const USER = {
+  name: "Taha Hassan Mujaddadi",
+  email: "tahahassan82@gmail.com",
+};
 
 const MENU_ITEMS: MenuItem[] = [
   { label: "Profile", icon: "account-circle" },
@@ -35,12 +39,6 @@ const MENU_ITEMS: MenuItem[] = [
   { label: "Contact Us", icon: "phone" },
   { label: "Logout", icon: "exit-to-app" },
 ];
-
-// TODO: Replace with real auth store data when auth is implemented
-const MOCK_USER = {
-  name: "Taha Hassan Mujaddadi",
-  email: "tahahassan82@gmail.com",
-};
 
 const Profile = () => {
   const insets = useSafeAreaInsets();
@@ -76,50 +74,44 @@ const Profile = () => {
           { paddingBottom: insets.bottom + Spacing.lg },
         ]}
       >
-        {/* Orange header with title + user card */}
-        <View style={styles.header}>
-          <View style={styles.titleRow}>
-            <Text style={styles.title}>Profile</Text>
+        <View style={[styles.header, { paddingTop: insets.top + Spacing.xl }]}>
+          <View style={styles.headerTopRow}>
+            <Text style={styles.headerTitle}>Profile</Text>
             <Pressable
               style={styles.bellButton}
               accessibilityRole="button"
               accessibilityLabel="Notifications"
+              onPress={() => undefined}
+              hitSlop={10}
             >
               <MaterialIcons
-                name="notifications"
-                size={26}
+                name="notifications-none"
+                size={30}
                 color={Colors.white}
               />
             </Pressable>
           </View>
-
-          {/* User identity card */}
-          <View style={styles.userCard}>
-            <View style={styles.avatarWrapper}>
-              <View style={styles.avatarCircle}>
-                <MaterialIcons
-                  name="account-circle"
-                  size={AVATAR_ICON_SIZE}
-                  color={Colors.primary}
-                />
-              </View>
-              <Pressable
-                style={styles.editButton}
-                accessibilityRole="button"
-                accessibilityLabel="Edit profile picture"
-              >
-                <MaterialIcons name="edit" size={12} color={Colors.white} />
-              </Pressable>
-            </View>
-
-            <View style={styles.userInfo}>
-              <Text style={styles.userName} numberOfLines={2}>
-                {MOCK_USER.name}
-              </Text>
-              <Text style={styles.userEmail} numberOfLines={1}>
-                {MOCK_USER.email}
-              </Text>
-            </View>
+        </View>
+        <View style={styles.identityCard}>
+          <View style={styles.avatarWrap}>
+            <MaterialIcons name="person" size={52} color={Colors.primary} />
+            <Pressable
+              style={styles.editButton}
+              accessibilityRole="button"
+              accessibilityLabel="Edit profile picture"
+              onPress={() => undefined}
+              hitSlop={8}
+            >
+              <MaterialIcons name="edit" size={14} color={Colors.white} />
+            </Pressable>
+          </View>
+          <View style={styles.identityText}>
+            <Text style={styles.userName} numberOfLines={2}>
+              {USER.name}
+            </Text>
+            <Text style={styles.userEmail} numberOfLines={1}>
+              {USER.email}
+            </Text>
           </View>
         </View>
 
@@ -181,6 +173,45 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     paddingHorizontal: Spacing.reg,
     paddingBottom: Spacing.xl,
+  },
+  headerTopRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  headerTitle: {
+    color: Colors.white,
+    fontSize: FontSizes.xxxl,
+    fontWeight: "800",
+  },
+
+  identityCard: {
+    minHeight: 128,
+    marginHorizontal: wp(4),
+    marginTop: -82,
+    borderRadius: 16,
+    backgroundColor: Colors.white,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: Spacing.xl,
+    paddingVertical: Spacing.xl,
+    shadowColor: CARD_SHADOW,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.28,
+    shadowRadius: 24,
+    elevation: 5,
+  },
+  avatarWrap: {
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    borderRadius: AVATAR_SIZE / 2,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: SOFT_ORANGE,
+  },
+  identityText: {
+    flex: 1,
+    marginLeft: Spacing.xl,
   },
   titleRow: {
     flexDirection: "row",
