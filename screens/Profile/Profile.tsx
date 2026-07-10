@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import { wp } from "utils/dimensions";
@@ -42,6 +43,7 @@ const MENU_ITEMS: MenuItem[] = [
 
 const Profile = () => {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const version = Constants.expoConfig?.version ?? "—";
 
   const handleLogout = () => {
@@ -60,6 +62,10 @@ const Profile = () => {
   const handleMenuPress = (label: string) => {
     if (label === "Logout") {
       handleLogout();
+      return;
+    }
+    if (label === "Profile") {
+      router.push("/(tabs)/profileDetail");
       return;
     }
     // TODO: navigate to respective screens when implemented

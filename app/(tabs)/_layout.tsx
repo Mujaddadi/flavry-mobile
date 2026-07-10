@@ -103,6 +103,13 @@ export default function Layout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="profileDetail"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
     </Tabs>
   );
 }
