@@ -64,7 +64,6 @@ const ReserveTable = () => {
     restaurantName: string;
     restaurantImage: string;
     restaurantTagline: string;
-    restaurantPrice: string;
     restaurantRating: string;
     restaurantReviewCount: string;
     restaurantCategory: string;
@@ -84,7 +83,6 @@ const ReserveTable = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
-  const price = Number(params.restaurantPrice) || 0;
   const rating = Number(params.restaurantRating) || 0;
   const reviewCount = Number(params.restaurantReviewCount) || 0;
 
@@ -190,7 +188,6 @@ const ReserveTable = () => {
               <Text style={styles.restaurantName} numberOfLines={1}>
                 {params.restaurantName}
               </Text>
-              <Text style={styles.restaurantPrice}>Rs {price}</Text>
             </View>
             <Text style={styles.restaurantTagline}>
               {params.restaurantTagline}
@@ -450,14 +447,6 @@ const ReserveTable = () => {
             </Text>
           )}
         </View>
-
-        <View style={styles.divider} />
-
-        {/* ── Total ── */}
-        <View style={styles.totalRow}>
-          <Text style={styles.totalLabel}>Total</Text>
-          <Text style={styles.totalAmount}>Rs {price}</Text>
-        </View>
       </ScrollView>
 
       {/* ── Bottom actions ── */}
@@ -597,11 +586,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: Spacing.sm,
   },
-  restaurantPrice: {
-    fontSize: FontSizes.sm,
-    fontWeight: "700",
-    color: Colors.primary,
-  },
   restaurantTagline: {
     fontSize: FontSizes.sm,
     color: Colors.gray2,
@@ -727,24 +711,6 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.xs,
     color: Colors.error,
     marginTop: -Spacing.sm,
-  },
-  // Total
-  totalRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: Spacing.reg,
-    paddingVertical: Spacing.md,
-  },
-  totalLabel: {
-    fontSize: FontSizes.md,
-    fontWeight: "700",
-    color: Colors.black1,
-  },
-  totalAmount: {
-    fontSize: FontSizes.md,
-    fontWeight: "700",
-    color: Colors.primary,
   },
   // Action bar
   actionBar: {

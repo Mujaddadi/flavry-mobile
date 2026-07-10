@@ -68,7 +68,7 @@ const RestaurantCard = ({
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={`${item.name}, ${item.tagline}, Rs ${item.price}`}
+      accessibilityLabel={`${item.name}, ${item.tagline}`}
       style={styles.card}
     >
       {/* Image */}
@@ -106,10 +106,7 @@ const RestaurantCard = ({
 
       {/* Info */}
       <View style={styles.cardBody}>
-        <View style={styles.nameRow}>
-          <Text style={styles.restaurantName}>{item.name}</Text>
-          <Text style={styles.price}>Rs {item.price}</Text>
-        </View>
+        <Text style={styles.restaurantName}>{item.name}</Text>
         <Text style={styles.tagline}>{item.tagline}</Text>
 
         <View style={styles.metaRow}>
@@ -230,7 +227,6 @@ const TableReservationSearch = () => {
               restaurantName: item.name,
               restaurantImage: item.image,
               restaurantTagline: item.tagline,
-              restaurantPrice: String(item.price),
               restaurantRating: String(item.rating),
               restaurantReviewCount: String(item.reviewCount),
               restaurantCategory: item.category,
@@ -569,22 +565,10 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     gap: 4,
   },
-  nameRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
   restaurantName: {
     fontSize: FontSizes.md,
     fontWeight: "700",
     color: Colors.black1,
-    flex: 1,
-    marginRight: Spacing.sm,
-  },
-  price: {
-    fontSize: FontSizes.sm,
-    fontWeight: "700",
-    color: Colors.primary,
   },
   tagline: {
     fontSize: FontSizes.xs,
