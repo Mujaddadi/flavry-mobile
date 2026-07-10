@@ -97,7 +97,7 @@ export default function Layout() {
         name="profile"
         options={{
           title: "Profile",
-          headerTitle: () => <AppHeader title="Profile" />,
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="person" size={24} color={color} />
           ),
