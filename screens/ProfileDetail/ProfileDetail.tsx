@@ -67,7 +67,7 @@ const ProfileDetail = () => {
       <View style={styles.header}>
         <Pressable
           style={styles.backButton}
-          onPress={() => router.back()}
+          onPress={() => router.navigate("/(tabs)/profile")}
           accessibilityRole="button"
           accessibilityLabel="Go back to profile"
         >
