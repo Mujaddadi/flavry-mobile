@@ -6,6 +6,7 @@ import { ActivityIndicator, Text, View } from "react-native";
 import AppHeader from "common/AppHeader";
 import FilterStrip from "common/FilterStrip";
 import RestaurantCard from "common/RestaurantCard";
+import SearchFiltersSheet from "common/SearchFilters";
 import { useRestaurantSearch } from "hooks/useRestaurantSearch";
 import {
   searchResultCardStyle,
@@ -16,6 +17,7 @@ import { Restaurant } from "types/home";
 import { wp } from "utils/dimensions";
 
 import { Colors } from "assets/styles/theme";
+import { DEFAULT_SEARCH_FILTERS, SearchFilterState } from "types/searchFilters";
 
 const CARD_WIDTH = wp(90);
 const SKELETON_HEIGHT = 220;
@@ -29,11 +31,23 @@ const RestaurantSearch = () => {
 
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [favouriteIds, setFavouriteIds] = useState<Set<string>>(new Set());
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const [filtersInitialSection, setFiltersInitialSection] = useState<
+    "price" | "sort" | "all"
+  >("all");
+  const [searchFilters, setSearchFilters] = useState<SearchFilterState>(
+    DEFAULT_SEARCH_FILTERS,
+  );
 
   const searchTerm = query || category;
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useRestaurantSearch({ query, category, filters: activeFilters });
+    useRestaurantSearch({
+      query,
+      category,
+      filters: activeFilters,
+      searchFilters,
+    });
 
   const restaurants = useMemo(
     () => data?.pages.flatMap((p) => p.restaurants) ?? [],
@@ -121,7 +135,10 @@ const RestaurantSearch = () => {
       <FilterStrip
         activeFilters={activeFilters}
         onFilterChange={toggleFilter}
-        onSortPress={() => {}}
+        onSortPress={() => {
+          setFiltersInitialSection("all");
+          setFiltersVisible(true);
+        }}
       />
 
       {isLoading ? (
@@ -143,6 +160,18 @@ const RestaurantSearch = () => {
           showsVerticalScrollIndicator={false}
         />
       )}
+      <SearchFiltersSheet
+        visible={filtersVisible}
+        context="restaurant"
+        value={searchFilters}
+        initialSection={filtersInitialSection}
+        onApply={(next) => {
+          setSearchFilters(next);
+          setFiltersVisible(false);
+        }}
+        onReset={() => setSearchFilters(DEFAULT_SEARCH_FILTERS)}
+        onClose={() => setFiltersVisible(false)}
+      />
     </View>
   );
 };

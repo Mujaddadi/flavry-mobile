@@ -4,6 +4,7 @@ import {
   TableReservationSearchParams,
   TableReservationSearchResult,
 } from "types/reservation";
+import { matchesSearchFilters, sortSearchResults } from "utils/searchFilters";
 
 // TODO: Mock data — swap these functions for real API calls when the backend is ready.
 
@@ -20,6 +21,12 @@ const MOCK_RESERVATION_RESTAURANTS: ReservationRestaurant[] = [
     category: "Burger",
     availableTimes: ["18:30", "19:00", "19:30", "20:00", "20:30"],
     isFavourited: false,
+    distanceKm: 2,
+    canDeliver: true,
+    canPickup: true,
+    environments: ["modern", "clean"],
+    services: ["tableReservation", "digitalMenu", "delivery", "pickup"],
+    cuisines: ["American", "Fast Food"],
   },
   {
     id: "rr2",
@@ -32,6 +39,12 @@ const MOCK_RESERVATION_RESTAURANTS: ReservationRestaurant[] = [
     category: "Steakhouse",
     availableTimes: ["19:30", "20:00", "20:30", "21:00", "21:30"],
     isFavourited: false,
+    distanceKm: 5,
+    canDeliver: false,
+    canPickup: true,
+    environments: ["comfortable", "modern"],
+    services: ["tableReservation", "pickup", "dineIn", "restroom"],
+    cuisines: ["American", "Continental"],
   },
   {
     id: "rr3",
@@ -44,6 +57,12 @@ const MOCK_RESERVATION_RESTAURANTS: ReservationRestaurant[] = [
     category: "Thai",
     availableTimes: ["18:30", "19:30", "20:00", "20:30", "21:00"],
     isFavourited: false,
+    distanceKm: 8,
+    canDeliver: true,
+    canPickup: false,
+    environments: ["traditional", "comfortable"],
+    services: ["tableReservation", "delivery", "dineIn"],
+    cuisines: ["Thai", "Asian"],
   },
   {
     id: "rr4",
@@ -56,6 +75,12 @@ const MOCK_RESERVATION_RESTAURANTS: ReservationRestaurant[] = [
     category: "Australian",
     availableTimes: ["19:00", "20:00", "20:30", "21:00", "21:30"],
     isFavourited: false,
+    distanceKm: 6,
+    canDeliver: false,
+    canPickup: true,
+    environments: ["aesthetic", "modern"],
+    services: ["tableReservation", "pickup", "digitalMenu"],
+    cuisines: ["Australian", "Continental"],
   },
   {
     id: "rr5",
@@ -69,6 +94,12 @@ const MOCK_RESERVATION_RESTAURANTS: ReservationRestaurant[] = [
     category: "Sushi",
     availableTimes: ["18:00", "18:30", "19:00", "20:30", "21:30"],
     isFavourited: false,
+    distanceKm: 9,
+    canDeliver: true,
+    canPickup: false,
+    environments: ["clean", "aesthetic"],
+    services: ["tableReservation", "delivery", "restroom"],
+    cuisines: ["Sushi", "Japanese"],
   },
   {
     id: "rr6",
@@ -81,6 +112,12 @@ const MOCK_RESERVATION_RESTAURANTS: ReservationRestaurant[] = [
     category: "Pizza",
     availableTimes: ["17:30", "18:00", "19:30", "20:00", "21:00"],
     isFavourited: false,
+    distanceKm: 4,
+    canDeliver: true,
+    canPickup: true,
+    environments: ["decent", "comfortable"],
+    services: ["tableReservation", "delivery", "pickup", "kidsMenu"],
+    cuisines: ["Italian", "Pizza"],
   },
 ];
 
@@ -89,17 +126,21 @@ const PAGE_SIZE = 4;
 // TODO: Replace with real API call when backend is ready.
 export const fetchTableReservationSearch = async ({
   page = 1,
+  searchFilters,
 }: TableReservationSearchParams): Promise<TableReservationSearchResult> => {
   const start = (page - 1) * PAGE_SIZE;
-  const restaurants = MOCK_RESERVATION_RESTAURANTS.slice(
-    start,
-    start + PAGE_SIZE,
+  const filtered = sortSearchResults(
+    MOCK_RESERVATION_RESTAURANTS.filter((restaurant) =>
+      matchesSearchFilters(restaurant, searchFilters),
+    ),
+    searchFilters,
   );
+  const restaurants = filtered.slice(start, start + PAGE_SIZE);
   return {
     restaurants,
-    total: MOCK_RESERVATION_RESTAURANTS.length,
+    total: filtered.length,
     page,
-    hasMore: start + PAGE_SIZE < MOCK_RESERVATION_RESTAURANTS.length,
+    hasMore: start + PAGE_SIZE < filtered.length,
   };
 };
 

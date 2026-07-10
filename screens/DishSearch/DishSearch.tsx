@@ -6,6 +6,7 @@ import { ActivityIndicator, Text, View } from "react-native";
 import DishCard from "common/DishCard";
 import FilterStrip from "common/FilterStrip";
 import AppHeader from "common/AppHeader";
+import SearchFiltersSheet from "common/SearchFilters";
 import { useDishSearch } from "hooks/useDishSearch";
 import {
   searchResultCardStyle,
@@ -15,6 +16,7 @@ import SkeletonCard from "screens/Home/components/SkeletonCard";
 import { Dish } from "types/home";
 import { wp } from "utils/dimensions";
 import { Colors } from "assets/styles/theme";
+import { DEFAULT_SEARCH_FILTERS, SearchFilterState } from "types/searchFilters";
 
 const CARD_WIDTH = wp(90);
 const SKELETON_HEIGHT = 260;
@@ -28,11 +30,18 @@ const DishSearch = () => {
 
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [favouriteIds, setFavouriteIds] = useState<Set<string>>(new Set());
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const [filtersInitialSection, setFiltersInitialSection] = useState<
+    "price" | "sort" | "all"
+  >("all");
+  const [searchFilters, setSearchFilters] = useState<SearchFilterState>(
+    DEFAULT_SEARCH_FILTERS,
+  );
 
   const searchTerm = query || category;
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useDishSearch({ query, category, filters: activeFilters });
+    useDishSearch({ query, category, filters: activeFilters, searchFilters });
 
   const dishes = useMemo(
     () => data?.pages.flatMap((p) => p.dishes) ?? [],
@@ -115,7 +124,10 @@ const DishSearch = () => {
       <FilterStrip
         activeFilters={activeFilters}
         onFilterChange={toggleFilter}
-        onSortPress={() => {}}
+        onSortPress={() => {
+          setFiltersInitialSection("all");
+          setFiltersVisible(true);
+        }}
       />
 
       {isLoading ? (
@@ -137,6 +149,18 @@ const DishSearch = () => {
           showsVerticalScrollIndicator={false}
         />
       )}
+      <SearchFiltersSheet
+        visible={filtersVisible}
+        context="dish"
+        value={searchFilters}
+        initialSection={filtersInitialSection}
+        onApply={(next) => {
+          setSearchFilters(next);
+          setFiltersVisible(false);
+        }}
+        onReset={() => setSearchFilters(DEFAULT_SEARCH_FILTERS)}
+        onClose={() => setFiltersVisible(false)}
+      />
     </View>
   );
 };

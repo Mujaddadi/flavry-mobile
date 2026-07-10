@@ -13,6 +13,7 @@ import {
   RestaurantSearchResult,
 } from "types/home";
 import { PopularAddon } from "types/cart";
+import { matchesSearchFilters, sortSearchResults } from "utils/searchFilters";
 
 // TODO: Mock data — swap these functions for real api calls when the backend is ready.
 
@@ -74,6 +75,12 @@ export const fetchFavouriteDishes = async (): Promise<Dish[]> => [
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
     discount: "Rs 50 off",
     deliveryTime: "20-25 min",
+    distanceKm: 2,
+    canDeliver: true,
+    canPickup: true,
+    services: ["delivery", "pickup", "onlineOrdering"],
+    cuisines: ["Fast Food", "American"],
+    rating: 4.5,
   },
   {
     id: "2",
@@ -159,6 +166,12 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     price: 500,
     image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=400",
     deliveryTime: "20-25 min",
+    distanceKm: 5,
+    canDeliver: true,
+    canPickup: false,
+    services: ["delivery", "digitalMenu"],
+    cuisines: ["American"],
+    rating: 4.2,
   },
   {
     id: "s3",
@@ -170,6 +183,12 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     price: 620,
     image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
     deliveryTime: "20-25 min",
+    distanceKm: 4,
+    canDeliver: true,
+    canPickup: true,
+    services: ["delivery", "pickup", "takeAway"],
+    cuisines: ["Fast Food", "American"],
+    rating: 4.4,
   },
   {
     id: "s4",
@@ -182,6 +201,12 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400",
     discount: "Deal",
     deliveryTime: "20-25 min",
+    distanceKm: 6,
+    canDeliver: true,
+    canPickup: true,
+    services: ["delivery", "pickup", "kidsMenu"],
+    cuisines: ["Fast Food"],
+    rating: 4.1,
   },
   {
     id: "s5",
@@ -193,6 +218,12 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     price: 380,
     image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400",
     deliveryTime: "15-20 min",
+    distanceKm: 3,
+    canDeliver: true,
+    canPickup: true,
+    services: ["delivery", "pickup", "takeAway"],
+    cuisines: ["Fast Food"],
+    rating: 4.3,
   },
   {
     id: "s6",
@@ -205,6 +236,12 @@ const MOCK_SEARCH_DISHES: Dish[] = [
     image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400",
     discount: "Rs 80 off",
     deliveryTime: "25-30 min",
+    distanceKm: 7,
+    canDeliver: true,
+    canPickup: false,
+    services: ["delivery", "onlineOrdering"],
+    cuisines: ["American", "Fast Food"],
+    rating: 4.6,
   },
 ];
 
@@ -218,6 +255,14 @@ const MOCK_SEARCH_RESTAURANTS: Restaurant[] = [
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600",
     deliveryTime: "20-25 min",
     isClosed: true,
+    price: 1200,
+    distanceKm: 2,
+    canDeliver: true,
+    canPickup: true,
+    environments: ["modern", "clean"],
+    services: ["delivery", "pickup", "digitalMenu", "onlineOrdering"],
+    cuisines: ["American", "Fast Food"],
+    rating: 4.4,
   },
   {
     id: "r2",
@@ -225,6 +270,14 @@ const MOCK_SEARCH_RESTAURANTS: Restaurant[] = [
     tagline: "Passionate about food",
     image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
     deliveryTime: "30-35 min",
+    price: 1800,
+    distanceKm: 8,
+    canDeliver: true,
+    canPickup: false,
+    environments: ["comfortable", "traditional"],
+    services: ["delivery", "dineIn", "restroom"],
+    cuisines: ["Thai", "Asian"],
+    rating: 4.7,
   },
   {
     id: "r3",
@@ -232,6 +285,14 @@ const MOCK_SEARCH_RESTAURANTS: Restaurant[] = [
     tagline: "Australian cuisine",
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
     deliveryTime: "20-25 min",
+    price: 1600,
+    distanceKm: 5,
+    canDeliver: false,
+    canPickup: true,
+    environments: ["modern", "aesthetic"],
+    services: ["pickup", "dineIn", "digitalMenu"],
+    cuisines: ["Australian", "Continental"],
+    rating: 4.3,
   },
   {
     id: "r4",
@@ -239,6 +300,14 @@ const MOCK_SEARCH_RESTAURANTS: Restaurant[] = [
     tagline: "I'm lovin' it",
     image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
     deliveryTime: "20-25 min",
+    price: 900,
+    distanceKm: 4,
+    canDeliver: true,
+    canPickup: true,
+    environments: ["fastFood", "clean"],
+    services: ["delivery", "pickup", "takeAway"],
+    cuisines: ["Mexican", "Fast Food"],
+    rating: 4.1,
   },
   {
     id: "r5",
@@ -247,6 +316,14 @@ const MOCK_SEARCH_RESTAURANTS: Restaurant[] = [
     image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600",
     deliveryDiscount: "Free delivery",
     deliveryTime: "15-20 min",
+    price: 1300,
+    distanceKm: 3,
+    canDeliver: true,
+    canPickup: true,
+    environments: ["modern", "comfortable"],
+    services: ["delivery", "pickup", "kidsMenu"],
+    cuisines: ["American", "Fast Food"],
+    rating: 4.5,
   },
   {
     id: "r6",
@@ -254,6 +331,14 @@ const MOCK_SEARCH_RESTAURANTS: Restaurant[] = [
     tagline: "Fresh from Japan",
     image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600",
     deliveryTime: "35-45 min",
+    price: 2100,
+    distanceKm: 9,
+    canDeliver: true,
+    canPickup: false,
+    environments: ["clean", "aesthetic"],
+    services: ["delivery", "digitalMenu", "dineIn"],
+    cuisines: ["Sushi", "Japanese"],
+    rating: 4.8,
   },
 ];
 
@@ -350,28 +435,42 @@ export const fetchPopularAddons = async (
 // TODO: Replace with real API call when backend is ready.
 export const fetchRestaurantSearch = async ({
   page = 1,
+  searchFilters,
 }: RestaurantSearchParams): Promise<RestaurantSearchResult> => {
   const start = (page - 1) * PAGE_SIZE;
-  const restaurants = MOCK_SEARCH_RESTAURANTS.slice(start, start + PAGE_SIZE);
+  const filtered = sortSearchResults(
+    MOCK_SEARCH_RESTAURANTS.filter((restaurant) =>
+      matchesSearchFilters(restaurant, searchFilters),
+    ),
+    searchFilters,
+  );
+  const restaurants = filtered.slice(start, start + PAGE_SIZE);
   return {
     restaurants,
-    total: MOCK_SEARCH_RESTAURANTS.length,
+    total: filtered.length,
     page,
-    hasMore: start + PAGE_SIZE < MOCK_SEARCH_RESTAURANTS.length,
+    hasMore: start + PAGE_SIZE < filtered.length,
   };
 };
 
 // TODO: Replace with real API call when backend is ready.
 export const fetchDishSearch = async ({
   page = 1,
+  searchFilters,
 }: DishSearchParams): Promise<DishSearchResult> => {
   const start = (page - 1) * PAGE_SIZE;
-  const dishes = MOCK_SEARCH_DISHES.slice(start, start + PAGE_SIZE);
+  const filtered = sortSearchResults(
+    MOCK_SEARCH_DISHES.filter((dish) =>
+      matchesSearchFilters(dish, searchFilters),
+    ),
+    searchFilters,
+  );
+  const dishes = filtered.slice(start, start + PAGE_SIZE);
   return {
     dishes,
-    total: MOCK_SEARCH_DISHES.length,
+    total: filtered.length,
     page,
-    hasMore: start + PAGE_SIZE < MOCK_SEARCH_DISHES.length,
+    hasMore: start + PAGE_SIZE < filtered.length,
   };
 };
 

@@ -1,3 +1,9 @@
+import {
+  SearchEnvironmentFilter,
+  SearchFilterState,
+  SearchServiceFilter,
+} from "types/searchFilters";
+
 export enum DeliveryMode {
   DELIVERY = "delivery",
   PICKUP = "pickup",
@@ -27,6 +33,13 @@ export interface Dish {
   image: string;
   discount?: string;
   deliveryTime: string;
+  distanceKm?: number;
+  canDeliver?: boolean;
+  canPickup?: boolean;
+  environments?: SearchEnvironmentFilter[];
+  services?: SearchServiceFilter[];
+  cuisines?: string[];
+  rating?: number;
 }
 
 export interface Restaurant {
@@ -37,12 +50,21 @@ export interface Restaurant {
   deliveryDiscount?: string;
   deliveryTime: string;
   isClosed?: boolean;
+  price?: number;
+  distanceKm?: number;
+  canDeliver?: boolean;
+  canPickup?: boolean;
+  environments?: SearchEnvironmentFilter[];
+  services?: SearchServiceFilter[];
+  cuisines?: string[];
+  rating?: number;
 }
 
 export interface RestaurantSearchParams {
   query?: string;
   category?: string;
   filters?: string[];
+  searchFilters?: SearchFilterState;
   page?: number;
 }
 
@@ -57,6 +79,7 @@ export interface DishSearchParams {
   query?: string;
   category?: string;
   filters?: string[];
+  searchFilters?: SearchFilterState;
   page?: number;
 }
 

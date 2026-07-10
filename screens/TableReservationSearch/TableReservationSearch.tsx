@@ -17,6 +17,7 @@ import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { Colors, FontSizes, Spacing } from "assets/styles/theme";
 import AppHeader from "common/AppHeader";
 import ReservationPickers from "common/ReservationPickers";
+import SearchFiltersSheet from "common/SearchFilters";
 import { useTableReservationSearch } from "hooks/useTableReservationSearch";
 import { ReservationRestaurant } from "types/reservation";
 import { hp, wp } from "utils/dimensions";
@@ -26,6 +27,10 @@ import {
   makeDates,
 } from "utils/reservationUtils";
 import SkeletonCard from "screens/Home/components/SkeletonCard";
+import {
+  DEFAULT_RESERVATION_FILTERS,
+  SearchFilterState,
+} from "types/searchFilters";
 
 const CARD_IMAGE_HEIGHT = hp(18);
 const ICON_SM = wp(3.5);
@@ -177,6 +182,13 @@ const TableReservationSearch = () => {
   const [pickerType, setPickerType] = useState<
     "date" | "time" | "partySize" | null
   >(null);
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const [filtersInitialSection, setFiltersInitialSection] = useState<
+    "price" | "sort" | "all"
+  >("all");
+  const [searchFilters, setSearchFilters] = useState<SearchFilterState>(
+    DEFAULT_RESERVATION_FILTERS,
+  );
 
   const dates = useMemo(() => makeDates(), []);
 
@@ -185,6 +197,7 @@ const TableReservationSearch = () => {
       date: selectedDate,
       time: selectedTime,
       partySize,
+      searchFilters,
     });
 
   const restaurants = useMemo(
@@ -341,7 +354,10 @@ const TableReservationSearch = () => {
 
         <Pressable
           style={styles.filterChip}
-          onPress={() => {}}
+          onPress={() => {
+            setFiltersInitialSection("price");
+            setFiltersVisible(true);
+          }}
           accessibilityRole="button"
           accessibilityLabel="Price filter"
         >
@@ -355,7 +371,10 @@ const TableReservationSearch = () => {
 
         <Pressable
           style={styles.filterIconBtn}
-          onPress={() => {}}
+          onPress={() => {
+            setFiltersInitialSection("all");
+            setFiltersVisible(true);
+          }}
           accessibilityRole="button"
           accessibilityLabel="More filters"
         >
@@ -439,6 +458,18 @@ const TableReservationSearch = () => {
         onTimeChange={setSelectedTime}
         partySize={partySize}
         onPartySizeChange={setPartySize}
+      />
+      <SearchFiltersSheet
+        visible={filtersVisible}
+        context="reservation"
+        value={searchFilters}
+        initialSection={filtersInitialSection}
+        onApply={(next) => {
+          setSearchFilters(next);
+          setFiltersVisible(false);
+        }}
+        onReset={() => setSearchFilters(DEFAULT_RESERVATION_FILTERS)}
+        onClose={() => setFiltersVisible(false)}
       />
     </View>
   );
